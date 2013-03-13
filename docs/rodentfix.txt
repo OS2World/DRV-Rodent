@@ -1,0 +1,10 @@
+14.1/2/97: Warp 4 and RODENT.SYS 
+
+     The tablet / enhanced mouse driver by M. Finney was broken by the GA code of Merlin but i found a work-around. The symptoms i got was an error free driver load
+     (including vmouse.sys), a mouse cursor on the first graphic mode screen but the mouse pointer was static ie it would not move. All that was required was to put a
+     "basedev=reserve.sys /IO:3f8,8 /IRQ:4" as the first line of my config.sys. You will note that the values correspond to normal com1 as this is were my tablet is connected. By
+     modifying the values to /IO:2f8,8 and /IRQ:3 this should work for com2. I dont know if the problem was present in the BETA code as i did not get a copy but it is present in the
+     DEVCON version. I hope this will help someone because it had me looking very distainfully at a mechnical mouse for a few hours. This driver (called RODENT.SYS) supports
+     all mice and quite a number of tablets and has better/faster/more flexable mouse support and support for more buttons.
+
+     Submitted by: Paul F. Grobler (relborg@ibm.net)

@@ -1,0 +1,19 @@
+*
+* Copyright (c) 1993..2011 by Michael Lee Finney.  All rights reserved.
+*
+
+*-*-*-*-*-*-*-*
+* PS/2 mice.  *
+*-*-*-*-*-*-*-*
+
+:title
+PS/2 mouse
+
+:config
+device=\os2\pointdd.sys
+device=\os2\rodent.sys
+device=\os2\mouse.sys type=rodent$
+device=\os2\mdos\vmouse.sys
+
+:files
+rodent.sys \os2\rodent.sys

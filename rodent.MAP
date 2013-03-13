@@ -1,0 +1,31 @@
+
+ rodent
+
+ Start     Length     Name                   Class
+ 0001:0000 007AFH     DSEG                   DATA
+ 0002:0000 0610EH     CSEG                   CODE
+
+ Origin   Group
+ 0001:0   DGROUP
+
+  Address         Publics by Name
+
+ 0000:0000  Imp  DOSBEEP              (DOSCALLS.50)
+ 0000:0000  Imp  DOSCLOSE             (DOSCALLS.59)
+ 0000:0000  Imp  DOSDEVIOCTL          (DOSCALLS.53)
+ 0000:0000  Imp  DOSIODELAYCNT        (DOSCALLS.427)
+ 0000:0000  Imp  DOSOPEN              (DOSCALLS.70)
+ 0000:0000  Imp  DOSPUTMESSAGE        (MSG.1)
+ 0000:0000  Imp  DOSREAD              (DOSCALLS.137)
+ 0000:0000  Imp  DOSWRITE             (DOSCALLS.138)
+
+  Address         Publics by Value
+
+ 0000:0000  Imp  DOSREAD              (DOSCALLS.137)
+ 0000:0000  Imp  DOSPUTMESSAGE        (MSG.1)
+ 0000:0000  Imp  DOSCLOSE             (DOSCALLS.59)
+ 0000:0000  Imp  DOSWRITE             (DOSCALLS.138)
+ 0000:0000  Imp  DOSBEEP              (DOSCALLS.50)
+ 0000:0000  Imp  DOSOPEN              (DOSCALLS.70)
+ 0000:0000  Imp  DOSIODELAYCNT        (DOSCALLS.427)
+ 0000:0000  Imp  DOSDEVIOCTL          (DOSCALLS.53)

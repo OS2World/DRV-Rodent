@@ -1,0 +1,4 @@
+The files included in this .zip file are copyrighted by Michael Lee Finney.
+They are hereby released to the public domain and may be used for any
+purpose, private or commercial providing only that credit for the original
+code is included. The source code may be modified in any manner.

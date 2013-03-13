@@ -1,0 +1,2603 @@
+Rodent 1.0.13  1996-10-13 
+Source Code released 2011-02-28
+--------------------------------- Copyright ----------------------------------
+
+   Copyright (c) 1993..2011 by Michael Lee Finney.  All rights reserved.
+
+   All files associated with RODENT are copyrighted by Michael Lee Finney.
+The are hereby released into the public domain and may be used for any
+purpose, private or commercial providing only that credit for the original
+code is included. The source code may be modified in any manner.
+
+--------------------------------- Trademarks ---------------------------------
+
+   Many names used in this document are trademarked.  I apologize for the
+omission of any trademark which I have used and failed to mention as
+trademarked.  If notified, I will gladly place the appropriate notice in
+the next revision of this file.  The trademarks of which I am aware are...
+
+   ...Trademark...   ...................Owner...................
+
+   AceCat II         AceCad
+   Altra             Altra
+   Bit Pad Plus      Summagraphics
+   Felix             Altra
+   IBM               International Business Machines Corporation
+   Inport            Microsoft Corporation
+   Kurta             Kurta Corporation
+   Logitech          Logitech
+   Microsoft         Microsoft Corporation
+   MicroTouch        MicroTouch Systems, Inc.
+   Mouseman          Logitech
+   OS/2              International Business Machines Corporation
+   PC Mouse          MSC Technologies
+   PS/2              International Business Machines Corporation
+   SummaSketch       Summagraphics
+   SummaSketch FX    Summagraphics
+   SummaSketch II    Summagraphics
+   SummaSketch III   Summagraphics
+   ThinkPad          International Business Machines Corporation
+   Trackman          Logitech
+   UnMouse           MicroTouch Systems, Inc.
+   WIN-OS/2          International Business Machines Corporation
+   Windows           Microsoft Corporation
+
+---------------------------------- Contents ----------------------------------
+
+The distribution file RODNT100.ZIP contains the following files...
+
+   LICENSE.DOC  - Licensing information
+   ORDER.DOC    - Ordering information
+   RELEASE.DOC  - Release information
+   README.1ST   - Quick installation hints
+   RODENT.DOC   - This file
+   RODENT.SYS   - Mouse driver
+   RODENT.EXE   - Presentation Manager test program
+
+   BUSS.DDP     - Device driver installation file
+   CALCMP2X.DDP - Device driver installation file
+   CALCMP3X.DDP - Device driver installation file
+   CALCMP9X.DDP - Device driver installation file
+   CALCMPWZ.DDP - Device driver installation file
+   FELIX.DDP    - Device driver installation file
+   INPORT.DDP   - Device driver installation file
+   LOGITECH.DDP - Device driver installation file
+   MSOFT.DDP    - Device driver installation file
+   MSYSTEMS.DDP - Device driver installation file
+   PS2.DDP      - Device driver installation file
+   SGRAPH.DDP   - Device driver installation file
+
+   If this device driver is placed on a bulletin board, all files must
+be distributed -- preferably in the original RODNT100.ZIP file.
+
+---------------------------------- Summary -----------------------------------
+
+   RODENT.SYS is a mouse driver which supports most mice.  It provides
+three button support.  The advantages of RODENT.SYS over the IBM mouse
+drivers (assuming that they even work for your mouse) are...
+
+   1. Up to 7 buttons are supported (but only three can be reported
+      to OS/2 at this time due to the device driver interface provided
+      by IBM).
+
+   2. The mouse buttons can be arbitrarily reassigned (reordered).
+
+   3. The middle button on most 3 button mouse can be programmed as a
+      chord of the left and right buttons.
+
+   4. The interrupt handlers have been carefully tuned resulting in a
+      lower system load (compared to the IBM mouse drivers) when the
+      mouse is active.
+
+   5. The FIFO buffer of an 16550AFN or 16552 can be enabled, further
+      lowering the system load under the appropriate conditions.
+
+   6. More mice are supported using more protocols than the IBM mouse
+      drivers support.  Some digitizer tablets are supported.  All mice
+      supported by the IBM mouse drivers are supported.
+
+   7. Auto-detects the type of mouse, where possible.
+
+   8. Auto-detects the number of mouse buttons, where possible.
+
+   9. Auto-detects the type of uart (for serial mice).
+
+  10. Supports additional baud rates over the basic 1200 provided by the
+      IBM mouse drivers.  Baud rates of 150, 300, 600, 1200, 2400, 4800,
+      9600 and 19200 are supported for those mice which both allow the
+      baud rate to be set and which have a reset function available that
+      returns the mouse to a known state.
+
+  11. Supports additional reporting rates over the default provided by
+      the IBM mouse drivers.  Reporting rates of 10, 20, 30, 40, 50,
+      60, 80, 100 and 200 are supported for those mice which allow the
+      reporting rate to be set.
+
+  12. Any 8250 compatible uart can be used at any port address and any irq.
+      The IBM drivers only support COM1..COM2.
+
+  13. Should not "lose" the mouse during a reboot via Ctrl-Alt-Del.
+
+  14. Mouse deinstalls correctly on ABIOS systems (a bug in some of the IBM
+      mouse drivers).
+
+  15. Low battery detection for serial Logitech radio mice is provided
+      during system boot.
+
+  16. The actual mouse resolution can be specified.
+
+  17. The mouse sensitivity can be increased or reduced by a factor of
+      1, 2, 4 or 8.  This is useful for very low or high resolution mice
+      and for handicapped individuals who have problems with fine motor
+      control.
+
+  18. The direction of movement in either or both of the X and Y directions
+      can be reversed.  The X and Y cooridinates can themselves be exchanged.
+
+  19. Irq sharing can be controlled.
+
+  20. The Felix mouse supports a virtual "window" for absolute positioning
+      which may be smaller than the actual display.
+
+  21. The device name RODENT uses may be specified by the user to avoid
+      conflicts with other device drivers.
+
+  22. RODENT can be used to provide support for a second mouse when the
+      first mouse is supported by MOUSE.SYS (for those versions of MOUSE.SYS
+      which support the undocumented STYPE option).  This feature is
+      considered "experimental" since it relies upon an undocumented option
+      for MOUSE.SYS (which, in fact, does not always work).
+
+---------------------------------- Support -----------------------------------
+
+This software and source code is provided "As IS".
+
+-------------------------------- Installation --------------------------------
+
+   This mouse driver is an OS/2 2.x device driver ONLY, it does NOT
+function under OS/2 1.x or under any version of DOS, Windows or Unix.
+It is not possible to install this driver under OS/2 1.x, DOS, Windows
+or Unix.
+
+Installing RODENT.SYS during OS/2 installation:
+
+   1. Unzip RODNT100.ZIP and copy the files to the root directory on
+      a diskette prior to installing OS/2 (unless using a diskette
+      received from the author, in which case this step has been done
+      for you).
+
+   2. Proceed with installing OS/2.
+
+   3. At the "Select Mouse" screen, select "No pointing device support".
+      This prevents OS/2 from placing incorrect statements in CONFIG.SYS
+      during installation.  Any other choice will result in incorrect
+      installation of the mouse, in particular "other" is not acceptable.
+
+   4. At the "Advanced Options" screen, select "Install Device Support
+      Diskette".
+
+   5. At the "OS/2 2.1 Device Driver Installation" screen, place the
+      diskette from step 1 into the diskette drive and select "Install".
+
+   6. At the "Select Device Drivers" screen, select the appropriate mouse
+      driver (down arrow to change current highlighted entry and space bar
+      to select the current highlighted entry).  Press <tab> to move to
+      the "Ok" button and then press <Enter>.  OS/2 will copy RODENT.SYS
+      into the \OS2 directory and update your CONFIG.SYS file.  It will
+      then present the "OS/2 2.1 Device Driver Installation" screen again
+      because you might have other device drivers.  If so, install them
+      now.  After all of your device drivers have been installed use the
+      right arrow to select "Exit" and press <Enter>.  At the "Exit the
+      Program" dialog, select "Yes".  OS/2 will then present you with a
+      message that your system configuration has been changed.  Press
+      <Enter> to continue with the installation of OS/2.
+
+   7. At the "Advanced Options" screen, press <Enter> to continue.  You
+      may now complete the installation of OS/2.
+
+   Warning: OS/2 will add the statements to CONFIG.SYS in the incorrect
+            order.  If you have installed a serial mouse you may need
+            to edit your CONFIG.SYS file before your mouse can be used.
+            The mouse statements in your CONFIG.SYS file must occur in
+            the following order...
+
+               DEVICE=...POINTDD.SYS...
+               DEVICE=...RODENT.SYS...
+               DEVICE=...MOUSE.SYS...
+               DEVICE=...VMOUSE.SYS...
+               DEVICE=...COM.SYS...
+               DEVICE=...VCOM.SYS...
+
+            If this is the case, then when OS/2 is rebooted it may tell
+            you that it failed to install some or all of RODENT.SYS,
+            MOUSE.SYS and VMOUSE.SYS.  Press <Enter> to continue booting
+            OS/2, start an editor (the system editor is always available)
+            and change the CONFIG.SYS file so that the mouse statements
+            are in the correct order.  This should be done when installing
+            a serial mouse even if OS/2 boots without error messages to
+            avoid conflicts with the mouse driver and the serial port
+            driver.
+
+Installing RODENT.SYS after OS/2 installation:
+
+      The file RODENT.SYS should be copied to a directory of your
+   choice -- the C:\OS2 directory is the usual choice, but any directory
+   can be used.  If OS/2 does not support your mouse at all then remember
+   that the mouse will not function correctly until RODENT.SYS has been
+   installed.  It is necessary to modify the CONFIG.SYS file contained in
+   the root directory of your boot drive to contain the following lines...
+
+      DEVICE=x:\OS2\POINTDD.SYS
+      DEVICE=x:\path\RODENT.SYS [options...]
+      DEVICE=x:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=x:\OS2\MDOS\VMOUSE.SYS
+
+   and any other existing lines related to the mouse driver should be
+   removed.  These lines should be placed in the order given and for
+   serial mice must precede the "DEVICE=...COM.SYS..." line.  For
+   example, assuming that OS/2 is located on the C: drive and that
+   RODENT.SYS has been placed in the C:\OS2 directory:
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+      or:
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS BAUD=19200 BUFFERED DPI=400
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+      or:
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS PORT=73D8 IRQ=11 BAUD=2400 BUFFERED MOUSE=C PROTOCOL=MM BUTTONS=2 DPI=300
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   The first DEVICE line in the last example is longer than 80 characters.
+   In most cases an installation similar to the first two examples would
+   be used.  If you have multiple mice attached to your system, then you
+   may need to specify the mouse type or the serial port for the desired
+   mouse.  Only one mouse can be used at a time.  Lines in your CONFIG.SYS
+   which are mouse related are...
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\VISION.SYS...
+      DEVICE=C:\OS2\PCLOGIC.SYS...
+      DEVICE=C:\OS2\MOUSE.SYS...
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS...
+
+   all such lines should be removed and replaced as shown above.  There may
+   be other mouse related lines for different releases of OS/2 and where
+   mouse vendors have provided an OS/2 mouse driver.  Further, the
+   statements in CONFIG.SYS should occur in the following order...
+
+      DEVICE=...POINTDD.SYS...
+      DEVICE=...RODENT.SYS...
+      DEVICE=...MOUSE.SYS...
+      DEVICE=...VMOUSE.SYS...
+      DEVICE=...COM.SYS...
+      DEVICE=...VCOM.SYS...
+
+   failure to observe this ordering may result in failure of the mouse to
+   load properly or of the serial ports to operate correctly.  This mouse
+   driver has been tested under OS/2 2.0 GA, 2.0 GA+SP, 2.1 March beta and
+   2.1 GA.  It has been tested on a 50Mhz 486DX AT-clone and on an IBM
+   PS/2 model 70 (25Mhz 386).  The following mice have been tested...
+
+      AceCat II
+      Bit Pad Plus
+      CalComp Wiz digitizer
+      CalComp DrawingPad digitizer
+      Felix mouse (328 point version, 2 buttons)
+      Felix mouse (640 point version, 2 buttons)
+      Felix mouse (640 point version, 3 buttons)
+      Felix mouse (1280 point version, 3 buttons)
+      Honeywell Mouse
+      Logitech C9 Mouse
+      Logitech First Mouse (serial)
+      Logitech MouseMan Cordless Mouse (serial)
+      Logitech MouseMan Mouse (buss)
+      Logitech TrackMan Mouse (serial -- Mouse Systems compatible)
+      Microsoft Mouse (Inport buss)
+      Microsoft Mouse (serial)
+      Mouse System's 2D/3D mouse
+      SummaSketch II Plus
+      SummaSketch II Professional Plus
+      SummaSketch III
+      UnMouse
+
+      Only these mice have been tested by the author with this mouse
+   driver.  However, the driver is MUCH more capable because special
+   provisions have been made to support "partially" compatible mice
+   and most common mice use one of the available support protocols.
+   Additional mice have been tested by users who worked directly with
+   the author (such as the Kurta digitizer), but the author has not
+   personally tested any mouse not listed above.
+
+      In some cases a mouse might function with the driver, but require
+   some of the more exotic options (see the option list below).  For
+   example, you could have a mouse which recognized most of the protocols
+   associated with a Logitech type C mouse, but could not be automagically
+   recognized.  In this case you would use the CONFIG.SYS entries:
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=1 MOUSE=C
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   (assuming the mouse is attached to COM1) which forces the mouse
+   driver to accept the mouse as a Logitech type C mouse, but avoids
+   the recognition check used for the type C mice.  However, all
+   programming codes are still sent to the mouse.  Or as a more severe
+   example, you could have a mouse which supports the Mouse System's 5B
+   communication protocol (default with Mouse System's mice) but nothing
+   else works.  In that case you would use the CONFIG.SYS entries:
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=1 MOUSE=* PROTOCOL=5B
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   which forces the mouse driver to use the correct communication protocol,
+   but with NO attempt made at sending programming codes to the mouse.
+   The mouse must default to the appropriate state to use the specified
+   protocol.  Many mice can be setup this way, however other mice either
+   cannot be automagically recognized or intrinsically REQUIRE programming.
+
+------------------------- Known Setup Configurations -------------------------
+
+   Felix mouse (no PS/2 connector, 640 point version, either 2 or 3 buttons)
+   Honeywell Mouse (as shipped)
+   Keen Mouse (switch in MS mode, provides two buttons)
+   Logitech C7 Mouse (serial)
+   Logitech C9 Mouse (serial or buss)
+   Logitech First Mouse (serial -- model: M-MD15L-9F)
+   Logitech MouseMan Cordless Mouse (serial -- model: M-RA12)
+   Logitech MouseMan Mouse (buss -- model: M-PD13-9MD)
+   Logitech TrackMan Mouse (serial -- models: T-CA1- and T-CA1-9F)
+   Microsoft Mouse (serial or Inport buss)
+   Mouse System's 2D/3D mouse (and other newer mice)
+   PS/2 port mice
+   IBM ThinkPad (red button)
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT\RODENT.SYS
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Felix mouse (328 point version, 2 buttons)
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT\RODENT.SYS X=328 Y=328
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Felix mouse (640 point version, 3 buttons)
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT\RODENT.SYS MOUSE=FX
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Felix mouse (1280 point version, 3 buttons)
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT\RODENT.SYS X=1280 Y=1280 MOUSE=FX
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Honeywell Mouse (with jumper J3 cut)
+   Keen Mouse (switch in PC mode, provides three buttons)
+   Mouse Systems PC Mouse III
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=MS
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   CalComp Wiz and 2x00 digitizers
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=DW
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   CalComp 3300 (and newer) digitizers
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=D3
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   CalComp 9x00 digitizers
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=D9
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Summagraphics FX digitizers
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=SX
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Summagraphics digitizers which recognize the master reset
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=SG
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Summagraphics digitizers which fail to recognize the master reset and
+      which have a 4-button puck or a stylus attached
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=SM
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Summagraphics digitizers which fail to recognize the master reset and
+      which have a 16-button puck attached
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=SU
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Summagraphics Bit Pad Plus digitizers
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=BP
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Summagraphics Bit Pad Plus digitizers in CR mode
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=CR
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   Kurta digitizers
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=KR
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   AceCat II digitizers
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=AC
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   UnMouse
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS COM=# MOUSE=UN
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+   "No mouse"
+
+      DEVICE=C:\OS2\POINTDD.SYS
+      DEVICE=C:\OS2\RODENT.SYS MOUSE=NM [IRQ=#]
+      DEVICE=C:\OS2\MOUSE.SYS TYPE=RODENT$
+      DEVICE=C:\OS2\MDOS\VMOUSE.SYS
+
+----------------------------------- Hints ------------------------------------
+
+8514:
+
+   The 8514 screen driver in OS/2 2.1 has a problem in full screen WIN-OS2
+   sessions.  When using absolute pointing devices.  The mouse cursor is
+   restricted to the top half of the screen.  DOS full screen sessions and
+   Presentation Manager sessions do not have this problem.  Changing screen
+   drivers eliminates the problem.  This problem has been reported at
+   1024x768 resolution and may or may not exist in other resolutions.  This
+   is NOT a bug in RODENT.
+
+Absolute pointing device:
+
+   When using the Felix mouse, or any other absolute positioning device
+   whose maximum resolution is less than the screen dimensions the mouse
+   pointer will not traverse every screen point.  For example, on a 640x480
+   screen and an absolute device that has 320 points, only every other
+   horizontal screen point can be pointed at using the mouse cursor.
+   This does not cause a problem for most applications.  However, when
+   attempting to size a window it may not be possible to "grab" the
+   window's border.  There are two ways to alleviate this problem: first,
+   change the default border width using the Scheme Palette and second
+   use the window menu to select the "resize" option.  After the window
+   has been resized once using the mouse there will be no future
+   difficulties unless the screen resolution or the mouse resolution
+   is subsequently changed.
+
+AceCat digitizers
+
+   The author has tested with an AceCat II digitizer, but has not had an
+   older tablet to test.  To use an older tablet, it may be necessary to
+   use one of the Summagraphic's MOUSE options, or to use MOUSE=* and to
+   specify the hardware protocol to be used.
+
+Advanced Power Management
+
+   RODENT does not currently support power saving features.  If the mouse
+   becomes disabled due to being powered down (such as for PS/2 mouse)
+   then RODENT should not be used and the IBM mouse driver used instead.
+
+AMD-386
+
+   While these are undoubtably fine processors, I have had one report from
+   a user who obtained a machine using one of these processors and was
+   unable to obtain reliable operation without disabling the cache.  This
+   could have been an early release of the AMD-386 or it could have been a
+   motherboard or BIOS flaw.  Nevertheless, he was unable to use RODENT (or
+   anything else) for more than a few minutes without a system crash.
+
+AMI BIOS and BUFFERED
+
+   Some versions of this BIOS have problems recognizing the serial port
+   after a warm reboot and when the serial port has the FIFO buffer
+   enabled.  The symptoms of this is that the BUFFERED option is in use
+   and on a warm reboot the mouse is not found, but a power reset fixes
+   the problem (until the next warm reboot).  The fix for this is to
+   upgrade the BIOS.  However, there is a work-around using RODENT.
+   Instead of using the COM option, or allowing RODENT to find the mouse,
+   use the PORT and IRQ options with the appropriate value for the serial
+   port connected to the mouse.  This tells RODENT where the mouse is
+   located whether or not the BIOS recognized the serial port.  The COM
+   option and the automatic scan of the serial ports require the BIOS
+   to recognize the serial port.
+
+Bit Pad digitizers in CR mode:
+
+   It appears that when using the digitizer in CR mode with the relative
+   protocol (MOUSE=CR PROTOCOL=CR) that pressing/releasing a button causes
+   the mouse to move.  The magnitude of this motion can be substantial and
+   can make it difficult to click or double click.  Use of the RESPONSE
+   option with a negative value can reduce the severity of this problem
+   (e.g. RESPONSE=-2) but does not eliminate the problem.  The problem is
+   further compounded by the fact that the buttons are stiff and tend to
+   cause the puck to "jitter".  The cause of this problem seems to be with
+   the electronics of the tablet and tends to be worse when the buttons are
+   rapidly pressed and released.  When using the digitizer in CR mode with
+   the absolute protocol this problem does not seem to occur.  This is
+   probably due to the lack of acceleration in absolute mode.  However, the
+   same tablet used in BitPad mode does not have the problem.  The suggested
+   solution is therefore to simply set the tablet for BitPad mode (which is
+   the factory default).
+
+Button ordering:
+
+   When using a digitizer or mouse whose buttons aren't arranged in a good
+   default order, use the ORDER option to rearrange the buttons.
+
+   If the button order (i.e. right hand vs left hand) option has been
+   changed using the Presentation Manager mouse setup options the button
+   ordering is not maintained correctly for all sessions, and may even
+   reorder the wrong buttons.  Do not use the PM mouse setup option for
+   button ordering.  Use the "ORDER=..." option for RODENT.SYS instead.
+   This allows button reordering to apply to EVERY session and is
+   independent of PM.
+
+CalComp DrawingPad
+
+   I have seen one occasion that the DrawingPad reversed the vertical
+   direction (down became up and vice-versa).  Admittedly, this WAS after
+   plugging in the wrong power supply <g> (but operating with the correct
+   supply).  Powering down the system and rebooting corrected the problem.
+
+Clone mice:
+
+   Many of these mice (the Honeywell and Keen mice, for example) emulate
+   Microsoft mice and Mouse System's mice.  However, frequently these mice
+   have three buttons and when emulating Microsoft mice only allow the
+   outermost two buttons to be used.  Sometimes the middle button may
+   produce a chord click (the Honeywell mouse, for example) or may simply
+   ignore the middle button (the Keen mouse, for example).  RODENT.SYS
+   cannot do anything about this situation because that is a mouse hardware
+   limitation.  However, when emulating Mouse System's mice all three
+   buttons work properly.  This is the recommended mode for such mice.
+   This mode can frequently be selected by a slide switch.  The Honeywell
+   mouse requires disassembly of the mouse and cutting jumper J3 (see the
+   note below about Honeywell mice).
+
+COM4 Installation:
+
+   There's a problem in VVGA.SYS and VSVGA.SYS that can kill COM4 when you
+   enter (or exit) a DOS full-screen session, even if that session isn't
+   using that port.  The drivers which handle that screen switching,
+   mistakenly think that there's an 8514/A video card also in the system.
+   and write to two registers on that card.  Of course, if you really DO
+   have an 8514/A or S3-based video card then you CAN'T use COM4 at 0x02E8
+   for this very reason.
+
+   You can patch VVGA.SYS and VSVGA.SYS to eliminate the problem; look for
+   the
+
+      MOV DX,4AE8
+
+   instruction and NOP out the next two OUT DX,AL instructions which write
+   to 0x4AE8 and 0x4AE9 (which map to 0x02E8 and 0x02E9 on most com boards).
+
+   This appears to be fixed in the March beta of OS/2 2.1 and in the GA
+   release of OS/2 2.1.
+
+   Thanks to Jens Schlatter for relaying this information from Bill Hinkle.
+
+DOS session support:
+
+   All DOS support is provided by the IBM virtual mouse driver VMOUSE.SYS.
+   If you do not have DOS support, i.e. your CONFIG.SYS contains the line:
+
+      PROTECTONLY=YES
+
+   then none of the lines:
+
+      DEVICE=...VMOUSE.SYS...
+      DEVICE=...VCOM.SYS...
+
+   should be included in your CONFIG.SYS file.
+
+DOS Virtual Machine support:
+
+   When booting a version of DOS in a virtual machine (VMB) then a native
+   mouse driver should NOT be used, but instead use the "stub" driver that
+   OS/2 provides.  This driver is called MOUSE.COM and is located in the
+   OS2\MDOS directory.  It can be loaded in your AUTOEXEC.BAT if you so
+   desire.
+
+Dual boot or boot manager:
+
+   The Logitech type C mice frequently use the MM protocol when in DOS and
+   so the option "PROTOCOL=MM" may be necessary.  This allows OS/2 to use the
+   same protocol as used under DOS so the mouse won't be lost when switching
+   between DOS and OS/2.  In general, if using dual boot or boot manager and
+   the mouse uses a particular protocol under DOS the appropriate option may
+   need to be used under OS/2 to allow switching without losing the mouse.
+   However, under normal circumstances programmable mice such as the Logitech
+   type C mice are reset by RODENT.SYS to avoid such problems.  But (see the
+   note below for Logitech mice) there are some older type C mice which
+   appear to have initialization problems.
+
+Felix mouse:
+
+   When this mouse is first powered on, it is necessary to move the mouse
+   stick to each edge of the mouse for the hardware to correctly recognize
+   the range of motion for the mouse stick.  If the mouse stick is moved
+   to one side and the cursor stops partway across the screen then this
+   resetting action needs to be performed.  The Felix mouse is an absolute
+   pointing device which has lower resolution than the screen.  Therefore
+   it cannot point to every pixel on the screen.  Normally this is not a
+   problem.  See the hints section for more information on how to handle
+   this situation.  Also see the RESPONSE statement for new uses in Felix
+   operation.  Further, if you have one of the newer Felix mice, your
+   available resolution has been increased (depending on hardware release),
+   so if the mouse pointer will only move to a portion of the screen and
+   an older Felix mouse is in use, make sure that the "X=328 Y=328" options
+   are in use.  If the entire screen is covered using only a portion of
+   the available mouse stick travel range, then mkae sure that the
+   "X=1280 Y=1280" options are in use.  If you have a three button Felix
+   mouse, then all three buttons are supported.  If you have a two button
+   Felix mouse, the driver reports three buttons present (since it can't
+   tell the difference) but only two buttons ever report events.
+
+   Newer Felix mice support multiple protocols.  Autorecognition on those
+   versions of the Felix defaults to MOUSE=M instead of MOUSE=FX.  If
+   desirable to run the Felix in absolute mode then MOUSE=FX must be
+   specified in the parameter list.  When using the default protocol, the
+   newer Felix mice the middle button generates a "chord" click, so only
+   two buttons are available.  When using MOUSE=FX, all three buttons are
+   supported (and if desired, of course, BUTTONS=2 will cause the middle
+   button to generate a "chord" click).  If both relative mode and three
+   button support is desired, then the options "MOUSE=FX PROTOCOL=FR" must
+   be specified in the parameter list.
+
+   Also, note that the default button ordering that RODENT uses for the
+   Felix was changed with the introduction of the three button Felix.
+   The ORDER option can be used to change the button ordering if the
+   default ordering is not satisfactory.  This change was made to match
+   the ordered expected by most users (it was less clear on the older
+   Felix mice as to what the user's expectations were in this regard).
+
+   The newer Felix mice provide a PS/2 connector and an adapter from that
+   connecter to a 9-pin serial connector.  This release of RODENT does not
+   support the Felix as a PS/2 device in absolute mode.  The Felix may
+   work in relative mode as a PS/2 device, but that configuration has not
+   been tested.
+
+Honeywell mice:
+
+   These mice emulate Microsoft mice, but the middle button generates a
+   chord click.  However, they can also emulate Mouse System's mice if
+   jumper J3 is cut.  This requires disassembly of the mouse.  Please
+   call Honeywell at 800/445-6939 to obtain instructions for making this
+   modification.  I take no responsibility for any such hardware
+   modification.  Please note that any hardware alteration may affect
+   your warranty.  Honeywell is releasing a mouse with a slide switch to
+   overcome this problem 4Q '93.  Call Honeywell for availability and
+   pricing.
+
+Hot plugging:
+
+   Unplugging the mouse and then plugging it back in while the system
+   is active is not supported in this release.  This is normally not
+   a problem unless you are using a mouse switcher between multiple
+   systems.  However, many protocols have no problem with this because
+   they automatically resynchronize.  Usually the mouse must be present
+   for the mouse driver to load, however using the "MOUSE=* PROTOCOL=xx"
+   options (where xx is the desired protocol may allow OS/2 to be booted
+   without the mouse being present.  The mouse must default to the
+   specified protocol or must be attached to a computer which sets the
+   protocol properly when booted.  PS/2 port mice disable themselves
+   when unplugged and replugged so they may not be used in this type of
+   application.
+
+IBM 8516 Touch Screen
+
+   This is not supported.  IBM has a special driver for this discontinued
+   device, see the OS/2 documentation for installation instructions.
+
+IBM PS/2 mice:
+
+   Some IBM PS/2 mice with a black roller ball have hardware problems.
+   IBM's recommendation for these mice is to replace them with IBM PS/2
+   mice with a gray roller ball (or any OTHER mouse for that matter).
+
+Inport mice:
+
+   These are buss mice, but are NOT the same as AT buss mice.  There are
+   some Inport buss mice (Microsoft sells one) and AT buss mice (Logitech
+   sells one).  RODENT supports both kinds of buss mice and can tell them
+   apart.  Version 1.00 had a bug in the Inport buss mouse interrupt
+   handler that potentially could cause it to ignore mouse movement (but
+   the button presses were handled correctly).  This has been corrected.
+
+Keyboard operation of OS/2:
+
+   When installing RODENT.SYS, especially if experimenting with different
+   features make sure that you have an editor easily accessible from the
+   desktop and make sure that you know the various keyboard commands
+   needed to navigate the desktop during times that the system is booted
+   without mouse support.  Some keyboard commands that are especially
+   useful are...
+
+      <Alt> + <Tab>
+
+         Move to the next window
+
+      <Up arrow> or <down arrow>
+
+         Use to highlight an object in a window or option in a menu
+
+      <Enter>
+
+         Use to select the highlighted object
+
+      <Alt> + F O
+
+         Use to open a file once the system editor (E.EXE) has been started
+
+      <Alt> + F S
+
+         Use to save a file once altered when using the system editor
+
+      <Alt> + <F4>
+
+         Use to close a window (for example the system editor)
+
+      <Alt> + <Shift> + <Tab>
+
+         Use to select the desktop
+
+      <Ctrl> + "\"
+
+         Use to deselect all objects on the desktop once the desktop has
+         been selected
+
+      <Shift> + <F10>
+
+         Use to pop-up the desktop menu that contains the shutdown option
+
+   Note: these last three commands are usually used in order to shutdown
+         OS/2 when the mouse is not available.
+
+Kurta digitizers:
+
+   These digitizers are clones of the Summagraphics digitizers, but fail
+   to fully emulate the Summagraphic's digitizers.  In particular they
+   fail to support the master reset and all of the "z" commands.  The
+   MOUSE=KR option should be used for these tablets.
+
+Logitech mice:
+
+   There are some older Logitech mice which seem to have initialization
+   problems.  These mice typically hang up or completely refuse to
+   install.  Using the "UART=..." option and possibly the "MOUSE=C" or the
+   "MOUSE=*" and "PROTOCOL=5B" options may help.  If the mouse installs but
+   hangs up and unplugging the mouse and then plugging it back in makes the
+   mouse come "alive" then try the above options.  Later versions of RODENT
+   have introduced an additional delay following some commands issued to the
+   mouse.  This appears to have eliminated this problem for at least some
+   users.  The requirement for this delay is undocumented by Logitech.
+
+Microsoft PS/2 mice:
+
+   Microsoft PS/2 mice are not fully compatible with IBM PS/2 mice and
+   Logitech PS/2 mice.  This causes some difficulties in the interrupt
+   handler because the protocol is dependent upon the number of physical
+   buttons.  If using any three button PS/2 mouse with the options:
+
+      PORT=0060 IRQ=12 MOUSE=* PROTOCOL=PS BUTTONS=2
+
+   then the middle button will not be recognized.  However, this problem
+   does not exist when using any of:
+
+      ...\RODENT.SYS
+      ...\RODENT.SYS BUTTONS=2
+      ...\RODENT.SYS BUTTONS=3
+      ...\RODENT.SYS MOUSE=PS
+      ...\RODENT.SYS MOUSE=PS BUTTONS=2
+      ...\RODENT.SYS MOUSE=PS BUTTONS=3
+
+   because these allow the actual number of physical buttons to be
+   determined.  Also, the option:
+
+      ...\RODENT.SYS PORT=0060 IRQ=12 MOUSE=* PROTOCOL=PS BUTTONS=3
+
+   can be used as well because it correctly specified the number of
+   physical buttons.  There are no problems when using two button
+   PS/2 mice.
+
+Mouse sensitivity:
+
+   When the mouse is too sensitive or too slow, use the RESPONSE option
+   to change the mouse responsiveness.  Remember that the BAUD and RATE
+   options interact with the RESPONSE option.  If the reporting frequency
+   is increased then the average distance moved by the mouse between
+   reports is smaller.  Since there is a gradual acceleration threshold
+   to allow pixel by pixel control at slow speeds this means that the
+   mouse must be moved faster before acceleration becomes effective.
+   Conversely reducing the reporting frequency will effectively make the
+   mouse more "active" because the acceleration threshold is more likely
+   to be reached.
+
+   If the mouse sensitivity has been changed using the Presentation
+   Manager mouse setup options it may be found that the sensitivity in
+   other sessions is not appropriate.  Use the "RESPONSE=..." option
+   for RODENT.SYS instead.  This allows the mouse sensitivity to apply
+   to EVERY session and is independent of PM.  Also the Presentation
+   Manager acceleration occurs in addition to the acceleration provided
+   by RODENT.SYS.
+
+Mouse Systems Buss card:
+
+   Mouse Systems has a buss mouse.  This is not really a buss mouse, but
+   is a special serial interface card.  It is supported by RODENT using
+   the PORT and IRQ options.
+
+Multiple mice:
+
+   While multiple mice may be present in your computer system, only one
+   mouse can normally be used at a time (but see below).  The mouse to be
+   used is selected when OS/2 is booted and cannot be changed without
+   rebooting OS/2.  When searching for a mouse, RODENT.SYS uses the search
+   order:
+
+      Inport mice
+      Buss mice
+      PS/2 mice
+      "No mouse"
+      Serial mice
+         Logitech type C mice
+         Microsoft compatible mice (also Logitech type M, MW, V or VW mice)
+         Older Felix mice
+         Newer Felix mice                   (MOUSE=FX required)
+         Mouse System mice                  (MOUSE=MS required)
+         CalComp 2x00 and WIZ digitizers    (MOUSE=DW required)
+         CalComp 3300 and newer digitizers  (MOUSE=D3 required)
+         CalComp 9x00 digitizers            (MOUSE=D9 required)
+         SummaGraphics FX digitizers        (MOUSE=SX required)
+         SummaGraphics digitizers           (MOUSE=SG required)
+         SummaGraphics digitizers           (MOUSE=SM required)
+         SummaGraphics digitizers           (MOUSE=SU required)
+         Kurta digitizers                   (MOUSE=KR required)
+         AceCat II digitizers               (MOUSE=AC required)
+         UnMouse touch pad                  (MOUSE=UN required)
+         Bit Pad digitizers in Bit Pad mode (MOUSE=BP required)
+         Bit Pad digitizers in CR mode      (MOUSE=CR required)
+
+   Therefore Buss mice, Inport mice and PS/2 mice are recognized before
+   serial mice.  If you have one of these mice in your system but also
+   have a serial mouse attached you can force only serial mice to be
+   recognized by using the "MOUSE=S" option.  You can also force a
+   particular mouse to be recognized by using the appropriate "MOUSE=xx"
+   option.  You can prevent recognition of any mouse by using the "MOUSE=*"
+   option with the appropriate "PROTOCOL=xx" option.
+
+   However, MOUSE.SYS has an undocumeted option.  If you have two mice, one
+   of which is supported by MOUSE.SYS then RODENT can be used to provide
+   support for a second mouse.  MOUSE.SYS is not especially intelligent
+   at this, and takes the device characteristics from the mouse that it
+   supports (as of OS/2 2.1).  Thus, for example, assume that you have a
+   three button Logitech buss mouse and a three button Logitech serial
+   mouse.  MOUSE.SYS only supports two buttons on buss mice, but (as of
+   OS/2 2.1) supports three buttons on Logitech serial mouse (but the OS/2
+   2.1 version has bugs in this support).  So, to use RODENT to provide
+   support for a second mouse this can be done in two ways for this mouse
+   combination.  Now, the normal RODENT installation for the two mice in
+   this setup would be...
+
+      DEVICE=...\RODENT.SYS
+      DEVICE=...\MOUSE.SYS STYPE=RODENT$
+
+      DEVICE=...\RODENT.SYS MOUSE=S COM=1
+      DEVICE=...\MOUSE.SYS STYPE=RODENT$
+
+   where the first pair of lines provide support for the buss mouse and the
+   second pair of lines provide support for the serial mouse (but not at the
+   same time).  If support for both mice at the same time were desired, then
+   the setup would be...
+
+      DEVICE=...\RODENT.SYS
+      DEVICE=...\MOUSE.SYS STYPE=RODENT$ SERIAL=COM1
+
+      DEVICE=...\RODENT.SYS MOUSE=S COM=1
+      DEVICE=...\MOUSE.SYS STYPE=RODENT$
+
+   where the first pair of lines uses RODENT to support the buss mouse and
+   MOUSE.SYS to support the serial mouse.  This configuration will recognize
+   all three mouse buttons because MOUSE.SYS supports three buttons on the
+   serial mouse (even if incorrectly).
+
+   The second pair of lines uses RODENT to support the serial mouse and
+   MOUSE.SYS to support the buss mouse.  This configuration only recognizes
+   two mouse buttons because MOUSE.SYS only supports two buttons on the
+   buss mouse.
+
+   MOUSE.SYS will not allow three mice to be used at the same time (to the
+   best of my knowledge, and up to OS/2 2.1).
+
+   Please note that the STYPE option of MOUSE.SYS is undocumented, and as
+   such has not been used by many users.  It is therefore much more likely
+   to have bugs and the version of MOUSE.SYS in use may not allow the STYPE
+   option at all or may allow several occurrences.  MOUSE.SYS may allow the
+   use of STYPE with some mice and not with others even though there is no
+   apparent difference (to MOUSE.SYS).  In the examples above, if the serial
+   mouse is replaced by a Summmagraphics FX digitizer, then MOUSE.SYS will
+   not honor the STYPE option.  In the case that MOUSE.SYS allows multiple
+   occurrences of the STYPE option (perhaps a later release of OS/2), the
+   NAME option can be used to load multiple occurrences of RODENT to provide
+   support for as many mice as MOUSE.SYS will allow.  As of OS/2 2.1, the
+   TYPE and STYPE options for MOUSE.SYS are mutually exclusive, so RODENT
+   cannot be used to support both mice.
+
+   Also note that while it is possible to explicitly control the mouse that
+   RODENT is using, the same is not true of MOUSE.SYS.  If MOUSE.SYS supports
+   (however poorly) both mice then it may not be possible to get MOUSE.SYS
+   to provide secondary mouse support for a particular combination without
+   allowing MOUSE.SYS to support its "default" mouse and RODENT to support
+   the remaining mouse.
+
+   Use of multiple mice must be considered an "experimental" feature until
+   MOUSE.SYS provides more consistent support and so the "bug reward" does
+   not apply to problems with the simultaneous use of multiple mice.  Please
+   notice that RODENT does nothing special to enable this usage, this is an
+   undocumented feature of MOUSE.SYS.
+
+   Caution: RODENT.SYS will suppress mouse events which duplicate the last
+      event reported.  However, MOUSE.SYS does not do so.  So unless the
+      hardware does so, then when using the STYPE option, MOUSE.SYS merges
+      the two event streams.  Thus if a button is pressed on the device
+      managed by RODENT but not pressed by the device managed by MOUSE.SYS
+      then the effects can be that drags on RODENT's device are problematic
+      because RODENT's button down is followed immediately by MOUSE's button
+      up so there is no interventing mouse motion and that clicking a button
+      on RODENT's device results in many mouse clicks and double clicks
+      becuase many of the reports by RODENT with a button down are followed
+      by one or more reports by MOUSE with the same button up.  RODENT cannot
+      solve this problem.  The only solution is either for MOUSE.SYS to be
+      fixed to not report duplicate events or to use a mouse that MOUSE.SYS
+      controls which only sends reports when mouse motion is present or a
+      button is present (having RODENT reporting duplicate events does NOT
+      solve the problem).
+
+PS/2 Installation:
+
+   Some PS/2 systems will require you to tell the hardware that you have "no 
+   mouse" when installing a serial mouse instead of a PS/2 mouse.
+
+PS/2 mice:
+
+   Some motherboards have incompatible keyboard/mouse controllers.  Normally
+   an 8042 chip is used, but some clones have used the 8242.  PS/2 mice will
+   not function on such systems.
+
+RODENT.SYS not found
+
+   Check the drive and path used in your CONFIG.SYS file.
+
+RODENT.SYS not installed
+
+   Check the options used for RODENT.SYS in your CONFIG.SYS file.
+
+Serial port support:
+
+   If you are using a serial mouse and only have a single serial port then
+   none of the lines:
+
+      DEVICE=...COM.SYS...
+      DEVICE=...VCOM.SYS...
+
+   should be placed in your CONFIG.SYS file.
+
+Summagraphics digitizers
+
+   This release does not support changing the puck while OS/2 is running.
+   Shutdown OS/2, power off the digitizer, change the puck (and CONFIG.SYS
+   if necessary) and then reboot the system.  Some older Summagraphics
+   tablets do not support the master reset that RODENT uses.  MOUSE=SM or
+   MOUSE=SU should be used (as appropriate) for these tablets.  This is also
+   true of some "Summagraphics compatible" digitizers.  Use of MOUSE=KR may
+   also be useful for some "Summagraphics compatible" digitizers.  A "soft"
+   reset following the master reset was added so that these older tablets
+   would be better supported.  While that may be adequate for some tablets,
+   it was found that other tablets would lock up when presented with the
+   master reset so the MOUSE=SM and MOUSE=SU options were added.  This is
+   necessary because Summagraphics tablets set the default hardware protocol
+   based on the attached puck, and the master reset is the only way to reset
+   the protocol.  Therefore, the 16-button puck cannot be used on these
+   tablets except with the MOUSE=SU option.  Further, these tablets must
+   default in hardware to 9600 baud because the baud rate is also not reset
+   by the "soft" reset.
+
+SummaSketch II
+
+   These tablets have been observed to have some delayed motion after moving
+   the mouse.  This is a problem with the tablets and not with RODENT, and
+   is related to the "jitter" filter.  Replacing a SummaSketch II with a
+   SummaSketch III eliminates the problem.  This is most noticable when using
+   PROTOCOL=UR.
+
+SummaSketch III
+
+   If the SummaSketch III is attached to a PS/2 model 70 and is powered on
+   before the model 70 then the model 70 may signal a hardware failure
+   during the power on hardware check.  This is a hardware issue and cannot
+   be alleviated by RODENT.SYS because the problem occurs before RODENT.SYS
+   is loaded into memory.  To alleviate this problem simply power up the
+   SummaSketch III after the model 70 has completed its hardware checks.
+
+ThinkPad 720C
+
+   This machine has been tested with RODENT, but apparently the "dual" mouse
+   feature only works with some two button mice.  No three button mice could
+   be used with the ThinkPad 720C tested, nor could most versions of the
+   Microsoft serial mouse (it is possible in this case than an incorrect
+   adapter cable was used).  However, the mice that worked were identical
+   when either RODENT.SYS or the IBM mouse driver was used (but, of course,
+   the features of RODENT were available when RODENT was in use).
+
+UnMouse
+
+   The UnMouse can, unfortunately, store its serial port configuration and
+   other parameters in non-volatile memory and there is no hardware reset
+   capability provided.  This is also the recommended mode of operation for
+   the UnMouse by MicroTouch.  This can make it impossible for RODENT to
+   initiate communications with the UnMouse if the UnMouse is not left in
+   the factory default setting (9600 baud, 7 data bits, no parity and 2 stop
+   bits).  The solution is to use the DOS or Windows program for the UnMouse
+   that was used to alter the setting and to reset the options back to the
+   factory default.  While other options are also stored, RODENT will reset
+   those if it is able to communicate with the UnMouse.  RODENT will not
+   permanently alter the settings on the UnMouse so that a power down will
+   reset the UnMouse back to the factory default settings.  If the UnMouse
+   is used in DOS or Windows by dual booting or using the boot manager then
+   care should be used to avoid altering the factory defaults.  RODENT will
+   be able to initiate communications if the default settings are left at
+   9600 baud, 8 data bits, no parity and 1 stop bit which are the settings
+   that RODENT uses.
+
+VMOUSE.SYS not installed, but RODENT.SYS and MOUSE.SYS installed
+
+   This is frequently due to the failure to specify either the COM option
+   or the PORT and IRQ options when using MOUSE=* PROTOCOL=xx.  This
+   generally happens when RODENT.SYS installed but the mouse is not
+   actually present.  This can happen for mice which cannot be checked
+   and when checking is disabled.  This has also occurred on systems where
+   the FIFO buffering was enabled by the BIOS during the cold boot and
+   MOUSE.SYS was used (RODENT has no problem with this situation).
+
+WIN-OS2 Jerky mouse movement
+
+   This is not a bug in RODENT, but a problem with Windows in part and in
+   WIN-OS2 in part.  I have seen suggestions that the following settings
+   seem to help with the problem...
+
+      IDLE_SECONDS=2 or 3
+      IDLE_SENSITIVITY=100
+
+   If you find a better solution to this problem, please let me know.
+
+---------------------------------- Testing -----------------------------------
+
+   After booting OS/2 preliminary testing can be accomplished simply by
+moving the mouse and making sure that the mouse cursor follows the movement
+of the mouse.  Execute RODENT.EXE to further test this device driver.  This
+test program will display a Presentation Manager window.  It will display
+the number of buttons as perceived by OS/2 and the mouse resolution as
+perceived by OS/2.  Further, if you click the mouse buttons, the associated
+OS/2 mouse event is displayed.  The most recent mouse event is flagged by
+an asterisk.  If the mouse pointer follows mouse movement correctly and
+all buttons operate correctly then you will probably not have any trouble
+with the mouse driver.  Other signs of trouble might be consistently missing
+mouse events (such as clicks) or events occurring without any associated
+physical mouse action.
+
+   When evaluating missing or extra events reasonable care should be taken.
+It has been observed that occasionally OS/2 will "lose" a mouse click during
+rapid mouse activity -- this is related to the fact that OS/2 only maintains
+a small mouse event queue to avoid "piling" up an extremely large number of
+events.  Sometimes losing a button release has the appearance of additional
+clicks if an application auto-repeats while a mouse button is pressed.  The
+loss, by OS/2, of mouse events is VERY rare except under very heavy mouse
+activity.  However, it appears to be slightly more common when using higher
+baud rates because the internal OS/2 queue is more likely to overflow.  This
+has been seen using the Logitech radio mouse at 9600 baud.  Also this loss
+might not actually be the fault of OS/2, but is occurring in the applications
+instead (actually more probable).  Nevertheless, this behavior has sometimes
+been seen, both with these mouse drivers AND with the OS/2 mouse drivers.
+It has been seen most often using Logitech's radio mouse and Microsoft's PWB
+in a full screen session.  Sometimes if this happens when scrolling releasing
+the mouse button will not stop the scrolling.  Simply click the mouse button
+again to stop scrolling.
+
+   This is a low-level mouse driver.  OS/2 handles all of the higher level
+functions, including routing mouse events to DOS sessions, OS/2 sessions,
+PM sessions, WIN-OS2 sessions and VMB sessions.  OS/2 reports all mouse
+events (in the appropriate form) to the currently active session.  Therefore
+DOS sessions CAN take advantage of all three buttons.  Since this mouse
+driver is not involved in these actions, failure of OS/2 in that manner
+is probably not caused by this device driver.
+
+   In particular, if when RODENT is installed, it works in Presentation
+Manager but there are problems with DOS or WIN-OS2 sessions or if after
+some time period or other event the mouse stops working in Presentation
+Manager, these types of problems are almost certainly not related to RODENT.
+There have been of these odd cases where MOUSE.SYS would work and RODENT
+would not, but RODENT was functioning correctly.  Since RODENT optimizes
+the interface, it does not send duplicate events to OS/2, MOUSE.SYS may
+do so.  Where the problem is related to losing" mouse events, RODENT may
+appear to fail while MOUSE.SYS appears to function correctly.  In every
+case I have examined, both drivers were working, but some other operating
+system component or application was causing the problem and was more
+sensitive to RODENT's optimization of the event stream.  In many if not
+most cases, the problems have actually been caused by the video device
+driver which seem to be notorious for this type of behaviour.
+
+   Note: The resolution reported by OS/2 is in "mickeys per centimeter".
+Therefore, the dots per inch provided to the device driver is divided by
+2.54 and rounded when reporting to OS/2.  This device driver reports the
+closest value possible.  For example, 400 dpi reports as 157 mickeys.
+Since the value reported to OS/2 is a fixed point number, the result if
+multiplied by 2.54 is only 399 (after rounding) instead of the original 400.
+
+---------------------------------- Options -----------------------------------
+
+   BAUD=#
+
+      This option allows the baud rate to be specified.  It may be one of
+
+         150, 300, 600, 1200, 2400, 4800, 9600 or 19200
+
+      All mice do not support all baud rates.  To use the lowest baud rate
+      supported by the mouse specify:
+
+         BAUD=150
+
+      and to use the highest baud rate supported by the mouse specify:
+
+         BAUD=19200.
+
+      The lowest baud rate which gives good performance should be used to
+      reduce system load.  If this option is not specified then it defaults
+      to a value determined by the protocol in use.  Each protocol has a
+      default baud rate based on the default mouse baud rate.  If a baud
+      rate is specified which is not supported by the protocol the highest
+      baud rate which is less than the specified baud rate will be used, if
+      any, and otherwise the lowest baud rate which is higher than the
+      specified baud rate will be used.
+
+   BUFFERED
+
+      This option enables the FIFO buffer if a 16550 uart is detected.  The
+      FIFO buffer is NOT enabled by default because some 16550 uarts do not
+      function correctly.  All 16550AFN uarts should function correctly, if
+      you have a 16550, 16550A or 16550AF uart then it should be replaced by
+      a 16550AFN uart.  RODENT.SYS will function correctly if the uart is
+      not replaced, but this option can only be used with a 16550AFN or
+      equivalent uart (such as 16c552 or 16c554).
+
+   BUTTONS=#
+
+      This option indicates the number of buttons to be supported.  Many
+      protocols support both 2 button and 3 button mice.  This option may
+      be specified as:
+
+         BUTTONS=2
+         BUTTONS=3
+
+      If BUTTONS=3 is specified for a 2 button mouse the mouse driver will
+      function normally, but will report to OS/2 that there are two buttons
+      if RODENT.SYS can obtain the number of buttons from the mouse and
+      will otherwise report to OS/2 that there are three buttons.  However,
+      events for the third button will simply never occur.  If BUTTONS=3 is
+      specified for a 3 button mouse (the default) then all three buttons
+      will be returned to OS/2.  OS/2 treats clicking any two or three)
+      mouse buttons together as a "chord" click.  It also handles single or
+      double clicks and single click and drag from all three buttons.
+
+      If BUTTONS=2 is specified for a 3 button mouse then the mouse driver
+      will convert a press of the middle button into a press of both left
+      and right buttons.  This means that clicking the middle button is
+      equivalent to a "chord" click.  However, if PROTOCOL=MI is specified
+      for a three button mouse (the default is PROTOCOL=MP) this cannot be
+      done because the Microsoft-compatible 2 button protocol is not aware
+      of events for the middle button.  In this case the middle button will
+      simply be ignored.  The included PM test program will report the number
+      of mouse buttons as seen by OS/2.
+
+   COM=#
+
+      This option allows the serial port to explicitly specified.  This
+      option may be specified as:
+
+         COM=1
+         COM=2
+         COM=3
+         COM=4
+
+      where 1..4 is one of the standard com ports.  So,
+
+         COM=1
+
+      is normally equivalent to:
+
+         PORT=03f8 IRQ=4
+
+      If both this option and the PORT option are omitted then the mouse
+      driver will scan COM1..COM4 (in order) to find the mouse.  This
+      procedure works and is reasonably reliable, however it is impossible
+      to completely restore the uart state so automatic scanning could
+      potentially cause problems with other devices attached to serial
+      ports.  This mouse driver will restore more of the serial port state
+      than the IBM mouse drivers.  Specifying either this option or the
+      PORT option also reduces the time required to initialize the mouse
+      driver -- by as much as a couple of seconds.  This option can ONLY
+      be specified for serial mice.  It is recommended that either this
+      option or the PORT and IRQ options be used for all serial mice.
+      When the MOUSE option is used either this option or the PORT and IRQ
+      options may be necessary.
+
+   DPI=#
+
+      This option allows the mouse resolution to be specified.  This must
+      be in the range 100..640 (inclusive).  The default is approximately
+      DPI=200 (actually the default is 80 mickeys per centimeter).  Most
+      newer mice are higher resolution (and even some of the older mice).
+      The C9 Logitech Buss Mouse has a resolution of 320 dpi and the newer
+      Logitech mice have a resolution of 400 dpi.  The value used should be
+      the HARDWARE resolution, many DOS mouse drivers allow the resolution
+      to be "set" in the software -- this does not affect the actual mouse
+      events but only their reporting by the DOS mouse driver.  This value
+      is reported to OS/2, but at this time, OS/2 does not appear to make
+      a significant use of the value due to a bug in MOUSE.SYS.  The
+      included test program will report the value as set by RODENT.SYS
+      and as seen by OS/2 (but which is ignored by MOUSE.SYS).
+
+   FILTER=#
+
+      This option is only effective for devices which can configure the
+      device to discard marginal data points.  The acceptable values are
+      device dependent.
+
+      MOUSE=UN:
+
+         The filter parameter determines the number of values which are to
+         be discarded after a touch.  This must in the range of 0 to 99,
+         inclusive.  The default and recommended value is 20.  A value of
+         0 is not recommended.
+
+   FLIPXY
+
+      Reverses the X and Y coordinates.  Effectively rotates the mouse by
+      90 degrees.  Usually at least one of the REVERSEX and REVERSEY options
+      will be desirable.
+
+      Note: The REVERSEX and REVERSEY options are applied to the physical
+            coordinates and therefore BEFORE the FLIPXY option, so when
+            the FLIPXY option is in effect use REVERSEX instead of REVERSEY
+            and vice-versa.
+
+            To rotate a digitizer tablet 90 degrees to the right, the options
+            FLIPXY REVERSEY should be used.
+
+            To rotate a digitizer tablet 90 degrees to the left, the options
+            FLIPXY REVERSEX should be used.
+
+            To rotate a digitizer tablet 180 degrees then options
+            REVERSEX REVERSEY should be used.
+
+   IRQ=#
+
+      This option allows the interrupt number to explicitly specified.  Any
+      interrupt from 2..15 may be used, unlike the IBM drivers which are
+      restricted to interrupts 2..7.  If omitted, the interrupt level to
+      be used will be determined from the port address.  This procedure is
+      only reliable for the standard COM1 and COM2 port addresses 3f8 and
+      2f8.  It may work for COM3 and COM4 (depending on the actual port
+      addresses).  The IBM mouse driver has the same (undocumented) problem,
+      but does not provide a mechanism to specify the interrupt number.
+
+   MARGIN=#
+
+      This option allows the margin on an absolute pointing device to be
+      specified.  The default is MARGIN=0 since some digitizer tablets have
+      a hardware margin.  Units are in terms of the device resolution.  Most
+      digitizers are programmed for 1000lpi so MARGIN=500 gives a half inch
+      margin on each side of the tablet.  When the cursor is in the margin
+      area button presses will be recognized and the mouse cursor will move
+      in two dimensions but will be "pegged" to the appropriate side and so
+      will not move in that dimension.  Use of a margin prevents a "cliff"
+      effect.  The hardware margins provided by some devices will ONLY
+      recognize button presses.
+
+   MOUSE=xx
+
+      This option allows the mouse type to be specified.  This is useful to
+      reduce the time required to load the mouse driver, or if the mouse
+      used responds correctly but the mouse type cannot be auto-determined.
+      If an mouse type is specified that fails to match the hardware in use
+      then the mouse driver may or may not load, and if loads may fail to
+      operate properly.  This option may be specified as:
+
+         MOUSE=AC
+
+            AceCat digitizers -- this is an "absolute" pointing device.
+            Each point on the digitizer tablet corresponds exactly to a
+            point on the screen.  This is similar to "touch" screens in
+            operation.  This feature can be awkward to those not used to
+            it, but may be preferred by those who use a digitizer tablet
+            on a regular basis.  This option is required for these
+            digitizers, they cannot be automagically recognized.
+
+            Protocols: MA, MM, MR, UA, UR
+                       default: MA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: This type of mouse cannot be automagically recognized,
+                  so this parameter is required for such mice.  Unlike the
+                  Summagraphic's digitizers, it is not possible to determine
+                  the puck type so it is always assumed that three buttons
+                  are present.  The ORDER option will usually be required.
+                  The recommended values depend upon the puck and protocol
+                  which is in use...
+                                                      MA/MM/MR      UA/UR
+
+                  16-button puck                      ORDER=213   ORDER=1243
+                   4-button puck                      ORDER=123   ORDER=2143
+                  stylus (1 button and tip button)    ORDER=132   ORDER=312
+                  stylus (2 buttons and tip button)   ORDER=132   ORDER=3142
+
+         MOUSE=B
+
+            Buss mouse, can be two button or three button.  Note that an
+            Inport mouse is NOT the same as a buss mouse.
+
+            Protocols: BS
+                       default: BS
+
+            Rate: 30, 60
+                  note: set by hardware jumper
+
+         MOUSE=BP
+
+            Summagraphics Bit Pad digitizer -- this is an "absolute" pointing
+            device.  This option is required for these digitizers, they
+            cannot be automagically recognized.
+
+            Protocols: BA, BR
+                       default: BA
+
+            Baud Rate: 9600
+
+            Note: When using the 4-button puck, ORDER=132 or ORDER=123 are
+                  both reasonably acceptable.  When using the stylus, only
+                  a single button is available so this is normally button 1.
+
+            Note: These digitizers have a maximum range of 4096 points.
+                  RODENT sets the maximum possible resolution.  However,
+                  the tablet reduces this value based on the actual active
+                  area which can vary between tablets.  Further the tablet
+                  requires this value to be an integral multiple of the
+                  tablet's dimension.  The nominal active area is 12 inches
+                  with a resulting maximum of 4092 (since 4092 is the
+                  smallest multiple of twelve which is less than or equal
+                  to 4096).  However, the resolution is also a factor
+                  of the active area.  Thus, the maximum returned by a
+                  particular test tablet was X=4092 and Y=3900.  But, when
+                  the hardware default resolution of 2400 was set (instead
+                  of 4096) this same tablet set the maximum to X=2400 and
+                  Y=2336.  This shows that the actual active area is partly
+                  a function of the resolution used.
+
+                  Therefore RODENT cannot control precisely the resolution
+                  used by the tablet.  Except for explictly setting the
+                  margin or a range this is not usually a problem.  A fixed
+                  margin and variable range can be set using MARGIN=#.  A
+                  fixed range and variable margin can be set by using
+                  X=#..# and Y=#..# where the maximum is less than the any
+                  probable active area variation.  Without knowing the
+                  exact resolution for a particular tablet setting both a
+                  fixed margin and a fixed range cannot be done.  It is
+                  likely that the exact resolution could vary over time for
+                  a given tablet.  The amount of this variation is not
+                  mentioned in the hardware specifications but is probably
+                  less than 5%.
+
+         MOUSE=C
+
+            Logitech Mouse System's compatible mouse.  DOS mouse drivers
+            frequently operate this mouse using the MM protocol.  When
+            using dual boot or Boot Manager it may be desirable to use
+            the MM protocol.
+
+            Protocols: 5B, MM, RE
+                       default: 5B
+                       better:  MM
+
+            Baud Rate: 1200, 2400, 4800, 9600
+                       default: 1200
+
+         MOUSE=CR
+
+            Summagraphics Bit Pad digitizer -- this is an "absolute" pointing
+            device.  This option is required for these digitizers, they
+            cannot be automagically recognized.
+
+            Protocols: CA, CR
+                       default: CA
+
+            Baud Rate: 9600
+
+            Note: When using the 4-button puck, ORDER=132 or ORDER=123 are
+                  both reasonably acceptable.  When using the stylus, only
+                  a single button is available so this is normally button 1.
+
+                  See the note under MOUSE=BP, since the only difference is
+                  the mode the tablet is jumpered to use the resolution
+                  problem is likely to exist when using MOUSE=CR as well.
+
+                  The digitizer must have physical jumpers changed to use
+                  this mode.  Support for the factory default is provided
+                  by MOUSE=BP.
+
+         MOUSE=D3
+
+            CalComp 3300 and newer digitizers -- this is an "absolute"
+            pointing device.  Each point on the digitizer table corresponds
+            exactly to a point on the screen.  This is similar to "touch"
+            screens in operation.  This feature can be awkward to those not
+            used to it, but may be preferred by those who use a digitizer
+            tablet on a regular basis.  This option is required for these
+            digitizers, they cannot be automagically recognized.
+
+            Protocols: HA, HR
+                       default: HA
+
+            Baud Rate: 150, 300, 600, 1200, 2400, 4800, 9600, 19200
+                       default: 9600
+
+            Note: The PRESSURE option may be used with this device.  The
+                  value must be in the (inclusive) range of 1 to 255.
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.  CalComp has
+                  many different styli and pucks available so the use of
+                  the ORDER option is almost essential.  For the 4-button
+                  puck arranged in a diamond, ORDER=2143 is recommended.
+                  For the styli with a tip and double-action button, the
+                  default of ORDER=123 has the tip has the "left" button.
+                  This is much more subject to personal preference so no
+                  recommendation will be made.  There are many other pucks
+                  available from CalComp and trial and error is the only
+                  guide to the best ordering for those.
+
+         MOUSE=D9
+
+            CalComp 9x00 digitizers -- this is an "absolute" pointing device.
+            Each point on the digitizer table corresponds exactly to a point
+            on the screen.  This is similar to "touch" screens in operation.
+            This feature can be awkward to those not used to it, but may be
+            preferred by those who use a digitizer tablet on a regular basis.
+            The 9x00 digitizers are older products which do not support full
+            software initialization.  These tablets MUST be set for 9600
+            baud.  The 9100 model tablets must have the hardware switches
+            configured for format 5.  If reconfigured by other applications
+            the tablet must be reset before this driver will function.  This
+            option is required for these digitizers, they cannot be
+            automagically recognized.
+
+            Protocols: HA, HR
+                       default: HA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.  CalComp has
+                  many different styli and pucks available so the use of
+                  the ORDER option is almost essential.
+
+         MOUSE=DW
+
+            CalComp WIZ and 2x00 digitizers -- these are "absolute" pointing
+            devices.  Each point on the digitizer table corresponds exactly
+            to a point on the screen.  This is similar to "touch" screens in
+            operation.  This feature can be awkward to those not used to it,
+            but may be preferred by those who use a digitizer tablet on a
+            regular basis.  The WIZ and 2x00 digitizers are older products
+            which do not support full software initialization.  These tablets
+            MUST be set for 9600 baud.  If reconfigured by other applications
+            the tablet must be reset to 9600 baud before this driver will
+            function.  This option is required for these digitizers, they
+            cannot be automagically recognized.
+
+            Protocols: HA, HR
+                       default: HA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.  CalComp has
+                  many different styli and pucks available so the use of
+                  the ORDER option is almost essential.  For the 4-button
+                  puck arranged in a row, ORDER=1234 is recommended.
+
+         MOUSE=FX
+
+            Altra's Felix mouse.  This is an "absolute" pointing device.
+            Each position of the mouse "handle" corresponds exactly to a
+            point on the screen.
+
+            Protocols: FA, FR
+                       default: FA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: This type of mouse allows different baud rates to be set
+                  but the commands used are inconsistent between different
+                  mice with the same internal version number depending on
+                  the cystal used during manufacture of the mouse.  Since
+                  this mouse can function in "delta" mode only the hardware
+                  default baud rate is allowed because this can be set
+                  consistently.
+
+         MOUSE=I
+
+            Inport buss mouse, can be two button or three button.  Note
+            that an Inport mouse is NOT the same as a buss mouse.
+
+            Protocols: IN
+                       default: IN
+
+            Rate: 30, 50, 100, 200
+                  default: 100
+
+         MOUSE=KR
+
+            Kurta digitizers, these are clones of the Summagraphic's
+            digitizers but fail to support the master reset and all of
+            the "z" commands.  This is an "absolute" pointing device.
+            Each point on the digitizer tablet corresponds exactly to a
+            point on the screen.  This is similar to "touch" screens in
+            operation.  This feature can be awkward to those not used
+            to it, but may be preferred by those who use a digitizer
+            tablet on a regular basis.  This option is required for
+            these digitizers, they cannot be automagically recognized.
+
+            Protocols: MA, MM, MR
+                       default: MA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.  Further, if
+                  the stylus is used then "ORDER=312" is recommended as
+                  well.  The default "ORDER=123" is suggested for the
+                  4-button puck.
+
+         MOUSE=M
+
+            Microsoft compatible serial 2 button mouse, non-programmable
+
+            Protocols: MI
+                       default: MI
+
+            Baud Rate: 1200
+                       default: 1200
+
+         MOUSE=MS
+
+            Mouse System's compatible serial 3 button mouse
+
+            Protocols: 5B
+                       default: 5B
+
+            Baud Rate: 1200
+                       default: 1200
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.
+
+         MOUSE=MW
+
+            Logitech's Microsoft/Mouse System compatible serial 3 button
+            mouse
+
+            Protocols: MI, MP, 5B
+                       default: MI
+
+            Baud Rate: 1200, 9600
+                       default: 1200
+
+         MOUSE=NM
+
+            Provides "no mouse" support.  This can be used to tell OS/2
+            that a mouse is present when one is not actually present but
+            it is necessary for OS/2 to provide high-level mouse support
+            that would be omitted if MOUSE.SYS and VMOUSE.SYS were simply
+            omitted from CONFIG.SYS.
+
+            Protocols: NM
+                       default: NM
+
+            Note: In order to provide DOS mouse support when using this
+                  option, the IRQ option must be used as well because
+                  VMOUSE.SYS will not load due to the fact that it assumes
+                  that the mouse actually owns an interrupt.  If the IRQ
+                  option is used, it may specify any free interrupt.  If
+                  the IRQ option is not used then VMOUSE.SYS will not load
+                  and should therefore be removed from the CONFIG.SYS file.
+
+         MOUSE=PS
+
+            PS/2 port compatible mouse
+
+            Protocols: PS
+
+            Rate: 10, 20, 40, 60, 80, 100, 200
+                  default: 100
+
+         MOUSE=S
+
+            This causes RODENT.SYS to only check for serial mice.  Any
+            other mice are ignored.  This could be useful if a buss mouse
+            interface is present, but the mouse itself is not present.
+            This option is supplied because some motherboards and video
+            adapters have a buss or Inport mouse interface built-in which
+            should be ignored.
+
+         MOUSE=SG
+
+            Summagraphics digitizers -- this is an "absolute" pointing
+            device.  Each point on the digitizer tablet corresponds exactly
+            to a point on the screen.  This is similar to "touch" screens
+            in operation.  This feature can be awkward to those not used
+            to it, but may be preferred by those who use a digitizer
+            tablet on a regular basis.  This option is required for these
+            digitizers, they cannot be automagically recognized.
+
+            Protocols: MA, MM, MR, UA, UR
+                       default: MA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.  Further, if
+                  the stylus is used then "ORDER=132" is recommended as
+                  well.  If the 16-button puck is used with the MA, MM or
+                  MR protocols then "ORDER=213" is recommended.  The default
+                  "ORDER=123" is suggested for the 4-button puck when using
+                  the MA, MM or MR protocols and for the 16-button puck used
+                  with the UA and UR protocols.  For the 4-button puck used
+                  with the UA or UR protocol, ORDER=2143 is recommended.
+
+            Note: Some Summagraphics compatible tablets do not handle the
+                  master reset correctly.  These tablets should use MOUSE=SM
+                  if a 4-button puck or a stylus is attached to the tablet
+                  and should use MOUSE=SU if a 16-button puck is attached to
+                  the tablet.  If used with MOUSE=SG the tablet may not
+                  work correctly and in some cases will lock up.
+
+         MOUSE=SM
+
+            Summagraphics digitizers which have the 4-button puck or stylus
+            attached and which do not recognize the master reset.  This is
+            an "absolute" pointing device.  Each point on the digitizer
+            tablet corresponds exactly to a point on the screen.  This is
+            similar to "touch" screens in operation.  This feature can be
+            awkward to those not used to it, but may be preferred by those
+            who use a digitizer tablet on a regular basis.  This option is
+            required for these digitizers, they cannot be automagically
+            recognized.  This option cannot be used for tablets which have
+            the 16-button puck attached.
+
+            Protocols: MA, MM, MR
+                       default: MA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.  Further, if
+                  the stylus is used then "ORDER=132" is recommended as
+                  well.  The default "ORDER=123" is suggested for the
+                  4-button puck.
+
+         MOUSE=SU
+
+            Summagraphics digitizers which have the 16-button puck attached
+            and which do not recognize the master reset.  This is an
+            "absolute" pointing device.  Each point on the digitizer tablet
+            corresponds exactly to a point on the screen.  This is similar
+            to "touch" screens in operation.  This feature can be awkward to
+            those not used to it, but may be preferred by those who use a
+            digitizer tablet on a regular basis.  This option is required
+            for these digitizers, they cannot be automagically recognized.
+            This option cannot be used for tablets which have either the
+            stylus or the 4-button puck attached.
+
+            Protocols: UA, UR
+                       default: UA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.  The default
+                  "ORDER=123" is suggested.
+
+         MOUSE=SX
+
+            Summagraphics FX digitizers -- this is an "absolute" pointing
+            device.  Each point on the digitizer tablet corresponds exactly
+            to a point on the screen.  This is similar to "touch" screens
+            in operation.  This feature can be awkward to those not used
+            to it, but may be preferred by those who use a digitizer
+            tablet on a regular basis.  This option is required for these
+            digitizers, they cannot be automagically recognized.
+
+            Protocols: MA, MM, MR, UA, UR
+                       default: MA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: The PRESSURE option may be used with this device.  The
+                  value must be in the (inclusive) range of 0 to 99.
+
+            Note: This type mouse cannot be automagically recognized, so
+                  this parameter is required for such mice.  It is always
+                  assumed that three buttons are present because the pucks
+                  are (optionally) cordless and can be changed without the
+                  knowledge of RODENT.
+
+                  In fact, the stylus has a tip and two buttons...but one
+                  of those buttons may generate a chord click in hardware
+                  (depending on the protocol) and so in that case only two
+                  buttons are available.
+
+                  If the stylus is used then "ORDER=132" is recommended.
+                  If the 16-button puck is used with the MA, MM or MR
+                  protocols then "ORDER=213" is recommended.  The default
+                  "ORDER=123" is suggested for the 4-button puck when using
+                  the MA, MM or MR protocols and for the 16-button puck used
+                  with the UA and UR protocols.  For the 4-button puck used
+                  with the UA or UR protocol, ORDER=2143 is recommended.
+
+            Note: These Summagraphics tablets use different pucks than the
+                  older tablets.  All stylus and pucks have three or more
+                  physical buttons.  If these tablets are used with
+                  MOUSE=SG, MOUSE=SM or MOUSE=SU then the correct puck
+                  may not be recognized.
+
+         MOUSE=V
+
+            Logitech compatible serial 3 button mouse, non-programmable.
+            If the MI protocol is used then the middle mouse button cannot
+            be programmed as a chord.
+
+            Protocols: MI, MP
+                       default: MP
+
+            Baud Rate: 1200
+                       default: 1200
+
+         MOUSE=VW
+
+            Logitech's Microsoft/Mouse System compatible serial 3 button
+            mouse
+
+            Protocols: MI, MP, 5B
+                       default: MP
+
+            Baud Rate: 1200, 9600
+                       default: 1200
+
+         MOUSE=UN
+
+            MicroTouch's UnMouse protocol
+
+            Protocols: TA, TR
+                       default: TA
+
+            Baud Rate: 9600
+                       default: 9600
+
+            Note: The PRESSURE option may be used with this device.  The
+                  value must be in the (inclusive) range of 0 to 99.
+
+            Note: The FILTER and NOISE options may be used with this device.
+                  Some older UnMouse devices do not handle the FILTER command
+                  properly, in which case the FILTER command will be accepted
+                  but will have no affect.
+
+            Note: RODENT requires the UnMouse to be set to 9600 baud and
+                  either 7 data bits, no parity and 2 stop bits or 8 data
+                  bits, no parity and 1 stop bit.  When using a large blunt
+                  object (such as a finger) to touch the UnMouse using the
+                  MARGIN command may be needed to allow the cursor to move
+                  all points on the screen.  Values of MARGIN=64 or
+                  MARGIN=80 are reasonable.
+
+         MOUSE=*
+
+            Unknown mouse.  This option would be used when the mouse is
+            known to communicate with a given protocol, but the mouse type
+            cannot be recognized and the mouse cannot be programmed.  In
+            all cases, the PROTOCOL=xx and either COM=# or PORT=# IRQ=#
+            must also be present.  This is NOT checked for and failure
+            to provide these options will prevent the mouse from being
+            properly initialized.  In some cases it can also cause the
+            system to lockup requiring a reboot.  If an absolute protocol
+            is in use then the X=# and Y=# options must also be used.
+
+   NAME=xx..xx
+
+      This option specifies the name of the device driver.  It defaults to
+      "RODENT", but may be set to any desired name.  The specified name must
+      be 1 to 7 characters in length and must be a valid filename component.
+      This latter constraint is not checked since the names considered valid
+      by OS/2 is subject to change.  However, if RODENT fails to install and
+      an unusual name is being specified then try changing the name or
+      omitting the option entirely and letting RODENT use its default name.
+
+   NOISE=#
+
+      This option is only effective for devices which can configure the
+      device to adjust sensitivity to noise.  The acceptable values are
+      device dependent.
+
+      MOUSE=UN:
+
+         The noise parameter adjusts the frequency at which the device
+         operates (thereby affecting its noise senstivity in a particular
+         environment).  This must in the range of 15 to 45, inclusive.
+
+   ORDER=#
+
+      This option specifies the button ordering.  The default button ordering
+      is usually adequate for all mice.  However, digitizer pucks tend to be
+      inconsistent between logical button numbering and physical button
+      placement and this option is frequently required for a digitizer.
+      Further, while OS/2 allows the left and right buttons to be swapped
+      for left hand users, it doesn't do so correctly for three button mice
+      and the swapping does not function at all for DOS and OS/2 full screen
+      sessions.  Trailing digits may be omitted if they are in order.  At
+      least one digit must be specified.  This mouse driver supports from 2
+      to 7 physical buttons. Any buttons above button 7 will be ignored.
+      This option may be specified as:
+
+         ORDER=1234567
+
+      where each digit is the button to be used for the corresponding button
+      position.  Omitted digit positions which be assigned their position
+      index.  It is an error to specify the same button twice, or to fail to
+      specify a button.  Thus:
+
+         ORDER=1
+         ORDER=12
+         ORDER=123
+         ORDER=1234
+         ORDER=12345
+         ORDER=123456
+         ORDER=1234567
+
+      all result in the default button ordering.  But:
+
+         ORDER=122
+         ORDER=124
+
+      are both errors.  And:
+
+         ORDER=7654321
+
+      reverses the button ordering.  So button 1 will be treated the same as
+      button 7, button 2 the same as button 6, and so on.  The most common
+      button orderings for mice are:
+
+         ORDER=321
+
+      which reverses the left and right buttons, leaving the middle button
+      unaffected.  Also:
+
+         ORDER=132
+
+      which reverses the middle and right buttons.  Thus OS/2 button 1
+      is physical button 1, OS/2 button 2 is physical button 2 and OS/2
+      button 3 is physical button 3.
+
+      One useful ordering for some digitizer pucks arranged in a "diamond"
+      ordering is:
+
+         ORDER=2143
+
+      For mice, the left mouse button is always physical button 1, the right
+      mouse button always physical button 3 and the middle mouse button (if
+      present) is always physical button 2.
+
+      The general button assignment strategy for two button mice is...
+
+         Button 1 -- OS/2 button 1 (left button down)
+         Button 2 -- OS/2 button 1+2 (all buttons down)
+         Button 3 -- OS/2 button 2 (right button down)
+         Button 4 -- OS/2 button 1+2 (all buttons down)
+         Button 5 -- OS/2 button 1+2 (all buttons down)
+         Button 6 -- OS/2 button 1+2 (all buttons down)
+         Button 7 -- OS/2 button 1+2 (all buttons down)
+
+      Notice that for two button mice no more than 3 buttons can be
+      profitably used for OS/2.  The general button assignment strategy for
+      three button mice is...
+
+         Button 1 -- OS/2 button 1 (left button down)
+         Button 2 -- OS/2 button 3 (middle button down)
+         Button 3 -- OS/2 button 2 (right button down)
+         Button 4 -- OS/2 button 1+2 chord (left + right buttons down)
+         Button 5 -- OS/2 button 1+3 chord (left + middle buttons down)
+         Button 6 -- OS/2 button 2+3 chord (middle + right buttons down)
+         Button 7 -- OS/2 button 1+2+3 chord (all buttons down)
+
+      While different chord clicks are generated, OS/2 recognizes all
+      multiple button presses as a chord click so any program that wishes
+      to distinguish between chord clicks must examine the primitive button
+      event messages.
+
+      Notice that for three button mice no more than 7 buttons can be
+      profitably used for OS/2.  Also, many digitizer pucks have the
+      limitation that only one button can be pressed at a time and there
+      are both mice and digitizer pucks which have buttons hard-wired to
+      generate chord clicks of other buttons and where multiple presses
+      of buttons may result in the appearance of some other button being
+      pressed.  These problems cannot be resolved by this driver, but the
+      ORDER option can allow the best setup for a particular mouse or puck.
+      To obtain the best ordering some experimentation may be necessary.
+
+      Note: Even if a mouse or puck only has two buttons, it may be necessary
+            to use an option such as ORDER=132 because sometimes the second
+            button may be assigned to a higher button number.  Usually
+            nothing higher than ORDER=1234 is needed unless there are more
+            than four buttons.
+
+   PRESSURE=#
+
+      This option is only effective for devices with pressure sensitive
+      buttons such as digitizer pens and touch screens.  This option sets
+      the pressure threshold at which such a device recognizes a button
+      press.  The acceptable values are device dependent.
+
+      MOUSE=D3:
+
+         The pressure must be in the range of 1 to 255, inclusive.  The
+         default, and value recommended by CalComp for their pressure
+         pens is 4.  The larger the number the more pressure is required.
+
+      MOUSE=SX:
+
+         The pressure must be in the range of 0 to 99, inclusive.  The
+         default is 5.  The larger the number the more pressure is required.
+
+      MOUSE=UN:
+
+         The pressure must in the range of 0 to 3, inclusive.  The default
+         is 0.  The larger the number the more pressure is required.
+
+   PORT=#
+
+      This option allows the serial port address to explicitly specified,
+      and may be specified as:
+
+         PORT=xxxx
+
+      where "xxxx" is the hex address of the port to be used.  If the COM
+      option is also specified, this option takes precedence.
+
+      Any serial port which is compatible with the 8250 uart may be used.
+      This mouse driver is not restricted to COM1..COM2, unlike the IBM
+      mouse drivers.  If both this option and the COM option are omitted
+      then the mouse driver will scan COM1..COM4 (in order) to find the
+      mouse.  This procedure works and is reasonably reliable, however it
+      is impossible to completely restore the uart state so automatic
+      scanning could potentially cause problems with other devices attached
+      to serial ports.  This mouse driver will restore more of the serial
+      port state than the IBM mouse drivers.  Specifying this option also
+      reduces the time required to initialize the mouse driver -- by as
+      much as a couple of seconds.
+
+   PROTOCOL=xx
+
+      This option allows the communications protocol to be specified.  This
+      is useful to select a non-default protocol and when using the MOUSE=*
+      option.  If the mouse type is known and an unsupported protocol is
+      selected the default protocol for that mouse type will be used.  This
+      option may be specified as:
+
+         PROTOCOL=3B
+
+            Three byte binary protocol -- this is an experimental protocol
+            which MAY work with some older mice.  If used then MOUSE=* must
+            also be used.  This protocol will work instead of the 5B protocol
+            but the mouse will "slip".  It also supports either a 2 button
+            or 3 button mouse.  Since this is an experimental protocol, the
+            reward does NOT apply to its use.
+
+         PROTOCOL=5B
+
+            Five byte binary protocol.  It is the default for Mouse System's
+            compatible mice.  This protocol supports either a 2 button or 3
+            button mouse.
+
+         PROTOCOL=BA
+
+            Summagraphics Bit Pad One/Two protocol.  This is the default
+            protocol for the Summagraphics Bit Pad series.  This is NOT
+            the same as the RE protocol (which is also called a Bit Pad
+            protocol even though it has no relationship with the Bit Pad
+            digitizers).  This is an "absolute" protocol.
+
+         PROTOCOL=BR
+
+            Summagraphics Bit Pad One/Two protocol.  This is NOT the same
+            as the RE protocol (which is also called a Bit Pad protocol even
+            though it has no relationship with the Bit Pad digitizers).  This
+            is a "relative" protocol.
+
+         PROTOCOL=BS
+
+            Buss mouse protocol, supports either 2 or 3 buttons.  This
+            protocol is used for buss mice.  Normally using MOUSE=B is
+            preferred to this option, but MOUSE=* PROTOCOL=BS is allowed.
+
+
+         PROTOCOL=CA
+
+            Summagraphics Bit Pad CR protocol.  This is an "absolute"
+            protocol.
+
+         PROTOCOL=CR
+
+            Summagraphics Bit CR protocol.  This is a "relative" protocol.
+
+         PROTOCOL=FA
+
+            Felix mouse protocol.  This is an "absolute" protocol, i.e. each
+            position of the mouse corresponds exactly to a point on the
+            screen.
+
+         PROTOCOL=FR
+
+            Felix mouse protocol.
+
+         PROTOCOL=HA
+
+            CalComp high resolution binary digitizer protocol, supports
+            either the 4 button puck (which may actually have 6 buttons, but
+            two of the buttons are hardware-wired as chords of the remaining
+            buttons) or the 16 button puck.  Pens are also supported, but
+            obtaining a "chord" click can be difficult if the middle button
+            is not programmed to generate a chord.  Pressure pens may also
+            have difficultly generating a double click for the tip.  OS/2
+            only supports three buttons so extra buttons are mapped to chord
+            clicks.  This protocol is normally used with digitizers.  This
+            is an "absolute" protocol, i.e. each position on the digitizer
+            tablet corresponds exactly to a point on the screen.
+
+         PROTOCOL=HR
+
+            CalComp high resolution binary digitizer protocol, supports
+            either the 4 button puck (which may actually have 6 buttons, but
+            two of the buttons are hardware-wired as chords of the remaining
+            buttons) or the 16 button puck.  Pens are also supported, but
+            obtaining a "chord" click can be difficult if the middle button
+            is not programmed to generate a chord.  Pressure pens may also
+            have difficultly generating a double click for the tip.  OS/2
+            only supports three buttons so extra buttons are mapped to chord
+            clicks.  This protocol is normally used with digitizers.
+
+         PROTOCOL=IN
+
+            Inport buss mouse protocol, supports either 2 or 3 buttons.
+            This protocol is used for Inport buss mice.  Normally using
+            MOUSE=I is preferred to this option, but MOUSE=* PROTOCOL=IN
+            is allowed.
+
+         PROTOCOL=MA
+
+            Summagraphics digitizer protocol.  OS/2 only supports three
+            buttons so extra buttons are mapped to chord clicks.  This
+            protocol is normally used with digitizers.  This is an
+            "absolute" protocol, i.e. each position on the digitizer
+            tablet corresponds exactly to a point on the screen.
+
+         PROTOCOL=MI
+
+            Microsoft compatible 2 button protocol.  Can be used with a 3
+            button mouse, but completely ignores the middle button.
+
+         PROTOCOL=MM
+
+            Mouse System's compatible protocol, supports either 2 or 3
+            buttons.  Also available on Summagraphics digitizer tablets.
+
+         PROTOCOL=MP
+
+            Extension to MI protocol which supports either 2 or 3 buttons.
+            If only two buttons are present the MI protocol is more
+            efficient.
+
+         PROTOCOL=MR
+
+            Summagraphics digitizer protocol.  OS/2 only supports three
+            buttons so extra buttons are mapped to chord clicks.  This
+            protocol is normally used with digitizers.
+
+         PROTOCOL=NM
+
+            Provides "no mouse" support.  This option may not be specified
+            by the user, this protocol is automatically provided when the
+            MOUSE=NM option is specified.
+
+         PROTOCOL=RE
+
+            Relative Bit Pad One protocol, supports either 2 or 3 buttons.
+            In spite of the name, this is NOT a protocol used by Bit Pad
+            One tablets.  It is used by Logitech Type C mice.
+
+         PROTOCOL=PS
+
+            PS/2 port protocol, supports either 2 or 3 buttons.
+
+         PROTOCOL=TA
+
+            MicroTouch's UnMouse tablet protocol.  This is an
+            "absolute" protocol, i.e. each position on the tablet
+            tablet corresponds exactly to a point on the screen.
+
+         PROTOCOL=TR
+
+            MicroTouch's UnMouse tablet protocol.
+
+         PROTOCOL=UA
+
+            Summagraphics UIOF digitizer protocol.  OS/2 only supports
+            three buttons so extra buttons are mapped to chord clicks.
+            This protocol is normally used with digitizers.  This is an
+            "absolute" protocol, i.e. each position on the digitizer
+            tablet corresponds exactly to a point on the screen.
+
+         PROTOCOL=UR
+
+            Summagraphics UIOF digitizer protocol.  OS/2 only supports
+            three buttons so extra buttons are mapped to chord clicks.
+            This protocol is normally used with digitizers.
+
+   RATE=#
+
+      This option allows the reporting rate to be specified for those mice
+      which accept this option (currently only Inport mice and PS/2 mice).
+      It may be one of:
+
+         10, 20, 30, 40, 50, 60, 80, 100 or 200
+
+      All mice do not support all reporting rates.  To use the lowest
+      reporting rate supported by the mouse specify:
+
+         RATE=10
+
+      and to use the highest reporting rate supported by the mouse specify:
+
+         RATE=200.
+
+      The lowest reporting rate which gives good performance should be used
+      to reduce system load.  If this option is not specified then it
+      defaults to a value determined by the protocol in use.  Each protocol
+      has a default reporting rate based on the default mouse reporting rate.
+      If a reporting rate is specified which is not supported by the protocol
+      the highest baud rate which is less than the specified rate will be
+      used, if any, and otherwise the lowest rate which is higher than the
+      specified rate will be used.  For some mice the reporting rate is set
+      via hardware jumper.
+
+   RESPONSE=#
+
+      This option specifies a divisor to increase or reduce the mouse
+      responsiveness.  If omitted it defaults to 0.  It may be specified as:
+
+         RESPONSE=-8
+         RESPONSE=-4
+         RESPONSE=-2
+         RESPONSE=-1
+         RESPONSE=0
+         RESPONSE=1
+         RESPONSE=2
+         RESPONSE=4
+         RESPONSE=8
+
+      and only these values may be used.  If the value is negative then the
+      responsiveness will be reduced by the given factor, and if positive
+      increased by the given factor.  If zero then there will be no change.
+      Since increasing or decreasing the responsiveness by a factor of one
+      has no effect these values are equivalent to zero.
+
+      This can be useful for very low or very high resolution mice (some
+      digitizers are 1000 dpi which is FAR too sensitive for most people).
+      Further, if a user has difficultly holding the mouse steady (such as
+      Parkinson's victims) this allows the mouse to ignore small movements.
+      Caution: with this option it is possible to slowly move the mouse
+      without moving the mouse cursor at all.  This effect does NOT happen
+      for RESPONSE=-1 or any non-negative value and would be most noticeable
+      for RESPONSE=-8.  Thus, RESPONSE=-8 would effectively make a 200 dpi
+      mouse into a 25 dpi mouse.  As for the ORDER option, OS/2 DOES provide
+      a mouse sensitivity control, but that control is not effective for DOS
+      or OS/2 full screen sessions and frequently the available range is
+      insufficient.
+
+      This option does not have an effect on absolute protocols, with the
+      exception of the Felix mouse, since those protocols map mouse positions
+      directly to screen positions.
+
+      For the Felix mouse a response value of 2, 4 or 8 may be used.  This
+      has the effect of multiplying the hardware resolution by that factor.
+      The mouse will report a position in a "window" where the size of the
+      window is 1/2, 1/4 or 1/8 of the full mouse motion.  This means that
+      the resolution inside this window is 2, 4 or 8 times higher than
+      otherwise.  The "position" of the window may be altered by moving the
+      mouse to the edge of the tablet into the margin.  The speed of motion
+      is then controlled by how far the mouse is moved into the margin.  The
+      default margin in this case is 4 instead of 0.
+
+      The operation of this feature is analogous to the operation of a
+      virtual desktop which is larger than the physical screen.
+
+      Since the "natural" action is to move to the extreme edge of the
+      tablet, to control how fast the window moves change the effective
+      margin.  Larger values will move the window faster.
+
+      The Felix has the characteristic that the last bit or so of maximum
+      travel is "iffy".  The default tablet dimensions are: X=640 Y=640, but
+      if the window moves faster in one direction or another then increase
+      or decrease the approriate value for that dimension.  Increasing the
+      value will cause the motion to faster in one direction and decreasing
+      the value will slow the motion in that direction.  The other direction
+      is not affected because zero is not "iffy".
+
+      This option is not as useful for the newer Felix mice due to their
+      increased resolution unless very high screen resolutions are in use.
+
+   REVERSEX
+
+      Reverses movement in the X direction.
+
+      Note: The REVERSEX and REVERSEY options are applied to the physical
+            coordinates and therefore BEFORE the FLIPXY option, so when
+            the FLIPXY option is in effect use REVERSEX instead of REVERSEY
+            and vice-versa.
+
+   REVERSEY
+
+      Reverses movement in the Y direction.
+
+      Note: The REVERSEX and REVERSEY options are applied to the physical
+            coordinates and therefore BEFORE the FLIPXY option, so when
+            the FLIPXY option is in effect use REVERSEX instead of REVERSEY
+            and vice-versa.
+
+   SHARE
+
+      If the SHARE option is present then RODENT will attempt to share the
+      irq if permitted by OS/2.  Otherwise, RODENT requests exclusive
+      ownership of the irq.  This option does not allow another program to
+      control the mouse (or digitizer) at the same time as RODENT, but
+      instead allows a different port to share the irq.  This is normally
+      only possible on PS/2 and EISA systems.
+
+   UART=#
+
+      This option allows the uart type to be specified.  It may be specified
+      as...
+
+         UART=8250
+         UART=16450
+         UART=16550
+         UART=16550A
+         UART=16552
+
+      If this option is omitted, the uart type will be determined by testing
+      the uart.  All uart testing will be skipped if this option is present.
+      This option is provided because some mice are sensitive to testing for
+      the uart type.  This sensitivity is very rare and probably also
+      depends on the design of the serial port.  This option should not be
+      specified unless RODENT.SYS fails to work properly.  The symptoms of
+      the only known occurrence of this problem was that RODENT.SYS would
+      load but the mouse pointer would not move.  If this option is specified
+      then either the COM option or the PORT and IRQ options must also be
+      specified.
+
+   X=[#..]#
+
+      This option specifies the active horizontal range for a digitizer
+      tablet.  It may be specified as:
+
+         X=#
+         X=#..#
+
+      In the first case, the active range is assumed to be 0..#-1 and in the
+      second case the active range is #1..#2-1.  Thus, X=7500 would result
+      in an active range of 0 to 7499, inclusive.  And X=500..7000 would
+      result in an active range of 500 to 6999, inclusive.  If "..#" is
+      present, spaces may NOT surround "..".  However, spaces MAY surround
+      "=" as in all other options.
+
+      This option is only necessary when it is not possible to determine
+      the digitizer size automatically or when it is not desired to use the
+      entire digitizer surface as the active mouse area.  This option can be
+      used to create nonsymmetrical margins.  Normally the MARGIN parameter
+      is used to specify symmetrical margins.  The MARGIN value is added to
+      the minimum and subtracted from the maximum horizontal range.  However,
+      if the digitizer tablet's physically active area was X=0..7500 then
+      specifying X=1000..4000 would give a left (or right) margin of 1000
+      and a right (or left) margin of 3500 (some tablets may physically
+      reverse left and right).
+
+   Y=[#..]#
+
+      This option specifies the active vertical range for a digitizer
+      tablet.  It may be specified as:
+
+         Y=#
+         Y=#..#
+
+      In the first case, the active range is assumed to be 0..#-1 and in the
+      second case the active range is #1..#2-1.  Thus, Y=7500 would result
+      in an active range of 0 to 7499, inclusive.  And Y=500..7000 would
+      result in an active range of 500 to 6999, inclusive.  If "..#" is
+      present, spaces may NOT surround "..".  However, spaces MAY surround
+      "=" as in all other options.
+
+      This option is only necessary when it is not possible to determine
+      the digitizer size automatically or when it is not desired to use the
+      entire digitizer surface as the active mouse area.  This option can be
+      used to create nonsymmetrical margins.  Normally the MARGIN parameter
+      is used to specify symmetrical margins.  The MARGIN value is added to
+      the minimum and subtracted from the maximum horizontal range.  However,
+      if the digitizer tablet's physically active area was Y=0..7500 then
+      specifying Y=1000..4000 would give a bottom (or top) margin of 1000
+      and a top (or bottom) margin of 3500 (some tablets may physically
+      reverse up and down).
+
+-------------------------------- Testimonials --------------------------------
+
+   This section is not present to "sell" you on RODENT, but this quote has
+been selected from quite a few to illustrate that RODENT is more efficient
+than the standard IBM mouse drivers, the difference is not necessarily
+noticable on a fast system, but RODENT really shows its colors when OS/2 is
+pressed.
+
+RODENT.SYS (with a Logitech at 400 DPI) is a real pleasure to use.  Due
+to a bad SIMM for the last few days I have gone from 20Megs RAM to 4Megs.
+2.1 is limping, no, crawling along, but is very visibly more responsive
+than with the IBM driver.  You may quote me. -- Allen Koppelman
+
+--------------------------------- What's New ---------------------------------
+
+Release  ..Date..  ..........................Changes..........................
+
+ 1.0.13  96/10/13  Felix mouse recognition sequence timing was altered for
+                   absolute mode because of hardware changes in new devices.
+
+ 1.0.12  95/12/06  Felix mouse now has three buttons.  Support added for
+                   third button.  Default button order also changed.  Older
+                   Felix mice still work correctly, but will report three
+                   buttons instead of two buttons because the driver can't
+                   tell the difference.  Felix mice now require MOUSE=FX to
+                   operate in absolute mode.
+
+ 1.0.11  95/05/14  Beta version 1.01 introduced a bug into the InPort mouse
+                   handler which prevented motion which was exactly and
+                   only in the X dimension from being reported properly.
+
+ 1.0.10  94/08/14  Auto-recognition code completely reorganized and
+                   rewritten.  Recognition support added for Mouse System's
+                   2D/3D mice and other newer mice and additional logic
+                   added to help recognize Logitech type C mice.
+
+ 1.0.9   94/07/31  Support for AceCat digitizers added.  Also numbering
+                   scheme added a decimal point so that more than 9 minor
+                   revisions.  Thus x.y.z means release x, major revision
+                   y and minor revision z.
+
+  1.08   94/06/21  Support for the Summagraphics BitPad digitizer added.
+                   UnMouse support was "tweaked" because of compatability
+                   problems with older devices.  Support for "no mouse"
+                   added.  Support for the AceCat II added.
+
+  1.07   94/04/27  Support for the Summagraphics FX digitizer and for the
+                   UnMouse added.  The FILTER and NOISE options added.
+
+  1.06   94/03/11  The NAME option was added to allow RODENT to alter its
+                   device name to avoid conflicts with other device drivers.
+
+  1.05   94/01/23  The default dimensions of the Felix mouse has been
+                   changed from 328 to 640 to accomodate the newer Felix
+                   mice.  The older mice will, after a short transition
+                   period, no longer be sold.  However, the older Felix
+                   mice can still be used by simply using the options
+                   "X=328 Y=328" which will restore the defaults needed
+                   for the older mice.  Serious consideration was given to
+                   creating an entirely separate mouse type, but this only
+                   adds space and time complexity to the code with very few
+                   benefits.  The same considerations caused the rejection
+                   of the option of autodetecting the actual dimensions of
+                   the Felix mouse becuase that would have increased the
+                   space and time complexity of the Felix interrupt handler.
+
+  1.04   93/11/19  The RESPONSE option now allows increased resolution
+                   for the Felix mouse in absolute mode.
+
+  1.03   93/11/15  The SHARE option added to control irq sharing.  Also
+                   support for Kurta digitizers added.  These are clones
+                   of the Summagraphic's digitizers but fail to support
+                   the full command set.
+
+  1.02   93/10/10  New options added to support the UIOF protocol for
+                   Summagraphics digitizer tablets.  Support added for
+                   older Summagraphics tablets which lock up when sent
+                   the master reset.
+
+  1.01   93/09/03  The REVERSEX, REVERSEY and FLIPXY options were added.
+
+                   An undocumented timing dependency was uncovered which
+                   affected initialization of some older Logitech mice.
+
+                   Some older Summagraphics tablets fail to handle the
+                   master reset properly.  An additional soft reset was
+                   added to allow those tablets to be used.  This also
+                   affected some Summagraphics compatible tablets.
+
+                   An error in the RESPONSE logic was corrected.  This bug
+                   could cause the system to crash when loading or cause
+                   Lan Server to fail to install correctly.  This bug
+                   was only encountered when RESPONSE=2, RESPONSE=4 or
+                   RESPONSE=8 was used.
+
+                   An error in the Inport interrupt routine was corrected.
+                   This bug would allow the mouse buttons to be handled
+                   properly, but potentially ignored mouse movement.
+
+  1.00   93/07/12  First general availability release.  Support added
+                   for PS/2 mice, Inport mice, Felix mice, Summagraphics
+                   digitizers and CalComp digitizers.  Many new PROTOCOL
+                   options added.  The PORT, IRQ, RESPONSE, ORDER, UART,
+                   RATE, X, Y, MARGIN and PRESSURE options were added.
+                   The COM option was split into the COM and PORT/IRQ
+                   options to allow a consistent format for each option.
+                   The MOUSE=X option was replaced by the MOUSE=* option
+                   to avoid a conflict with the X option.
+
+                   Initialization error fixed which caused the ordering of
+                   statements in CONFIG.SYS to be important for systems
+                   using Lan Server or NetWare.
+
+                   Uart testing affected some sensitive mice.  This was
+                   not a bug but caused some sensitive (older) mice to
+                   lock up.  The uart testing was changed to reduce the
+                   chances of this problem and the UART option was added
+                   to assist with these mice by completely avoiding uart
+                   testing.
+
+  0.90   93/04/07  Beta of initial release with digitizer support disabled.
+
+-------------------------------- Coming Soon ---------------------------------
+
+   No explicit plans have been made at this time.  However, some new
+features under consideration are...
+
+   Support for 3D/6D mice and the tilt/pressure features of digitizers.  This
+   requires the cooperation of IBM and is currently under consideration by
+   IBM, but until they arrive at (or accept) an extended mouse interface for
+   both RODENT and Presentation Manager these devices can only be supported
+   in the more limited 2D mode.
+
+      IBM has not made the protocol extensions available which are
+      needed for 3D/6D support.
+
+   A "drag" feature where clicking the middle button starts a right button
+   drag and clicking it again would "drop" the object being dragged.  This
+   feature, if implemented, would be an alternate use of the middle button
+   for the "chord" feature currently implemented.
+
+      I have gotten no requests for this feature.
+
+   An installation program (sending in the options you use will facilitate
+   this feature by providing the necessary information).
+
+      This will probably require a major rewrite.  It will be postponed
+      until the OS/2 32-bit device driver interface is released.
+
+   A Presentation Manager program to allow changing options "on the fly".
+
+      This will probably require a major rewrite.  It will be postponed
+      until the OS/2 32-bit device driver interface is released.
+
+   Possible support for more than three mouse buttons to "kick off" a program
+   or for a button to automatically generate a single or double click (these
+   features might require a Presentation Manager program to be active at all
+   times).
+
+      Using the middle button to generate a left button double click
+      turns out to be more difficult in the OS/2 device driver arena
+      than expected.  The appropriate location for such a feature is
+      in a Presentation Manager program that "hooks" the system queue.
+      Consequently, this feature is not likely to be implemented in
+      the near future.
+
+   Support for additional mice.
+
+      As they become available.
+
+   Better "hot plug" support.
+
+      This will probably require a major rewrite.  It will be postponed
+      until the OS/2 32-bit device driver interface is released.
+
+   However, none of these new features will be possible unless RODENT.SYS is
+used by a sufficient number of people who register their copies.  So PLEASE
+register!  If you have features you would like to see please send in your
+suggestions when you register (or at any time, for that matter).
+
+------------------------------------------------------------------------------

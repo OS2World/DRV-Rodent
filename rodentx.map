@@ -1,0 +1,611 @@
+Stack Allocation = 16384 bytes
+
+ TESTMOUSE
+
+ Start         Length     Name                   Class
+ 0001:00000000 00000559CH CODE32                 CODE 32-bit
+               at offset 00000000 00778H bytes from rodent.obj (rodent.c)
+               at offset 00000778 000BEH bytes from d:\ibmcpp\lib\dde4mbs.lib (edcstrt.ASM)
+               at offset 00000838 003E0H bytes from d:\ibmcpp\lib\dde4mbs.lib (EDCINIT.C)
+               at offset 00000c18 001F8H bytes from d:\ibmcpp\lib\dde4mbs.lib (setuparg.ASM)
+               at offset 00000e10 000E0H bytes from d:\ibmcpp\lib\dde4mbs.lib (SETUPENV.C)
+               at offset 00000ef0 00008H bytes from d:\ibmcpp\lib\dde4mbs.lib (WCTDT.C)
+               at offset 00000ef8 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (SCTDT.C)
+               at offset 00000f08 001F0H bytes from d:\ibmcpp\lib\dde4mbs.lib (EDCTERM.C)
+               at offset 000010f8 0041CH bytes from d:\ibmcpp\lib\dde4mbs.lib (MALLOC.C)
+               at offset 00001514 0014CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FREE.C)
+               at offset 00001660 00018H bytes from d:\ibmcpp\lib\dde4mbs.lib (FREEWEAK.C)
+               at offset 00001678 00480H bytes from d:\ibmcpp\lib\dde4mbs.lib (HEAPMIN.C)
+               at offset 00001af8 000DCH bytes from d:\ibmcpp\lib\dde4mbs.lib (CALLOC.C)
+               at offset 00001bd4 000E0H bytes from d:\ibmcpp\lib\dde4mbs.lib (EXIT.C)
+               at offset 00001cb4 00020H bytes from d:\ibmcpp\lib\dde4mbs.lib (TERMINAT.C)
+               at offset 00001cd4 0081CH bytes from d:\ibmcpp\lib\dde4mbs.lib (N_EXCEPT.C)
+               at offset 000024f0 00148H bytes from d:\ibmcpp\lib\dde4mbs.lib (N_EXCRIT.C)
+               at offset 00002638 0007CH bytes from d:\ibmcpp\lib\dde4mbs.lib (N_DUMPWK.C)
+               at offset 000026b4 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (fpreset.ASM)
+               at offset 000026c4 00014H bytes from d:\ibmcpp\lib\dde4mbs.lib (FCLWEAK.C)
+               at offset 000026d8 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (CWEAK.C)
+               at offset 000026e4 00077H bytes from d:\ibmcpp\lib\dde4mbs.lib (n_excpta.ASM)
+               at offset 0000275c 000DCH bytes from d:\ibmcpp\lib\dde4mbs.lib (FREEFCB.C)
+               at offset 00002838 00328H bytes from d:\ibmcpp\lib\dde4mbs.lib (BEGTHRD.C)
+               at offset 00002b60 001A0H bytes from d:\ibmcpp\lib\dde4mbs.lib (ENDTHRD.C)
+               at offset 00002d00 000C0H bytes from d:\ibmcpp\lib\dde4mbs.lib (FASTSEM.C)
+               at offset 00002dc0 000A9H bytes from d:\ibmcpp\lib\dde4mbs.lib (fastsema.ASM)
+               at offset 00002e6c 0002CH bytes from d:\ibmcpp\lib\dde4mbs.lib (THREADID.C)
+               at offset 00002e98 000F8H bytes from d:\ibmcpp\lib\dde4mbs.lib (TSGLOBAL.C)
+               at offset 00002f90 00024H bytes from d:\ibmcpp\lib\dde4mbs.lib (edcmsg.ASM)
+               at offset 00002fb4 00258H bytes from d:\ibmcpp\lib\dde4mbs.lib (PRTEMSG.C)
+               at offset 0000320c 0003CH bytes from d:\ibmcpp\lib\dde4mbs.lib (strspn.ASM)
+               at offset 00003248 0010CH bytes from d:\ibmcpp\lib\dde4mbs.lib (CTYPETBL.C)
+               at offset 00003354 00FFCH bytes from d:\ibmcpp\lib\dde4mbs.lib (DOFMTO.C)
+               at offset 00004350 00028H bytes from d:\ibmcpp\lib\dde4mbs.lib (WEAKFMT.C)
+               at offset 00004378 00014H bytes from d:\ibmcpp\lib\dde4mbs.lib (WEAKCPUT.C)
+               at offset 0000438c 00070H bytes from d:\ibmcpp\lib\dde4mbs.lib (FPRINTF.C)
+               at offset 000043fc 00068H bytes from d:\ibmcpp\lib\dde4mbs.lib (SPRINTF.C)
+               at offset 00004464 000D4H bytes from d:\ibmcpp\lib\dde4mbs.lib (WCTOMB.C)
+               at offset 00004538 000F0H bytes from d:\ibmcpp\lib\dde4mbs.lib (BUFPRINT.C)
+               at offset 00004628 00050H bytes from d:\ibmcpp\lib\dde4mbs.lib (WMEMFILE.C)
+               at offset 00004678 0015CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FFLUSH.C)
+               at offset 000047d4 00248H bytes from d:\ibmcpp\lib\dde4mbs.lib (FILLB.C)
+               at offset 00004a1c 001B8H bytes from d:\ibmcpp\lib\dde4mbs.lib (FLUSH.C)
+               at offset 00004bd4 00318H bytes from d:\ibmcpp\lib\dde4mbs.lib (FLUSHB.C)
+               at offset 00004eec 00190H bytes from d:\ibmcpp\lib\dde4mbs.lib (GETENV.C)
+               at offset 0000507c 00006H bytes from d:\ibmcpp\lib\dde4mbs.lib (ilog2.ASM)
+               at offset 00005084 00054H bytes from d:\ibmcpp\lib\dde4mbs.lib (INTERR.C)
+               at offset 000050d8 000A4H bytes from d:\ibmcpp\lib\dde4mbs.lib (LTOA.C)
+               at offset 0000517c 00008H bytes from d:\ibmcpp\lib\dde4mbs.lib (W_RAISE.C)
+               at offset 00005184 00044H bytes from d:\ibmcpp\lib\dde4mbs.lib (UWRITE.C)
+               at offset 000051c8 00034H bytes from d:\ibmcpp\lib\dde4mbs.lib (CRT_FD.C)
+               at offset 000051fc 00096H bytes from d:\ibmcpp\lib\dde4mbs.lib (edc3216.ASM)
+               at offset 00005294 000B2H bytes from d:\ibmcpp\lib\dde4mbs.lib (edcprol.ASM)
+               at offset 00005348 0000DH bytes from d:\ibmcpp\lib\dde4mbs.lib (sel_flat.ASM)
+               at offset 00005358 000A4H bytes from d:\ibmcpp\lib\dde4mbs.lib (FREETHRD.C)
+               at offset 000053fc 00012H bytes from d:\ibmcpp\lib\dde4mbs.lib (bts.ASM)
+               at offset 00005410 00164H bytes from d:\ibmcpp\lib\dde4mbs.lib (WCSTOMBS.C)
+               at offset 00005574 00014H bytes from d:\ibmcpp\lib\dde4mbs.lib (EDCMXDEF.C)
+               at offset 00005588 00014H bytes from d:\ibmcpp\lib\dde4mbs.lib (MATHERR.C)
+
+ 0002:00000000 000000019H CODE16                 CODE 16-bit
+               at offset 00000000 00019H bytes from d:\ibmcpp\lib\dde4mbs.lib (edc3216.ASM)
+
+ 0003:00000000 000000030H _MSGSEG32              CODE 32-bit
+               at offset 00000000 00030H bytes from d:\toolkt21\os2lib\os2386.lib (.\msgseg32.asm)
+
+ 0004:00000000 000000008H LIBDATA16              DATA16 16-bit
+               at offset 00000000 00008H bytes from d:\ibmcpp\lib\dde4mbs.lib (edc3216.ASM)
+
+ 0005:00000000 000000980H DATA32                 DATA 32-bit
+               at offset 00000000 00330H bytes from rodent.obj (rodent.c)
+               at offset 00000330 0000EH bytes from d:\ibmcpp\lib\dde4mbs.lib (edcstrt.ASM)
+               at offset 00000340 002C0H bytes from d:\ibmcpp\lib\dde4mbs.lib (EDCINIT.C)
+               at offset 00000600 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (setuparg.ASM)
+               at offset 00000610 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (FREE.C)
+               at offset 00000620 00030H bytes from d:\ibmcpp\lib\dde4mbs.lib (FREEWEAK.C)
+               at offset 00000650 00020H bytes from d:\ibmcpp\lib\dde4mbs.lib (HEAPMIN.C)
+               at offset 00000670 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (CALLOC.C)
+               at offset 00000680 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (EXIT.C)
+               at offset 00000690 000B0H bytes from d:\ibmcpp\lib\dde4mbs.lib (N_EXCEPT.C)
+               at offset 00000740 00002H bytes from d:\ibmcpp\lib\dde4mbs.lib (fpreset.ASM)
+               at offset 00000750 000A0H bytes from d:\ibmcpp\lib\dde4mbs.lib (BEGTHRD.C)
+               at offset 000007f0 00030H bytes from d:\ibmcpp\lib\dde4mbs.lib (ENDTHRD.C)
+               at offset 00000820 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (PRTEMSG.C)
+               at offset 00000830 00110H bytes from d:\ibmcpp\lib\dde4mbs.lib (CTYPETBL.C)
+               at offset 00000940 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (DOFMTO.C)
+               at offset 00000950 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (FFLUSH.C)
+               at offset 00000960 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (GETENV.C)
+               at offset 00000970 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (CRT_FD.C)
+
+ 0005:00000980 000000000H CTOR_DTOR1             DATA 32-bit
+ 0005:00000980 000000000H CTOR_DTOR2             DATA 32-bit
+ 0005:00000980 000000000H CTOR_DTOR3             DATA 32-bit
+ 0005:00000980 000000130H CONST32                CONST 32-bit
+               at offset 00000000 00020H bytes from d:\ibmcpp\lib\dde4mbs.lib (EDCINIT.C)
+               at offset 00000020 00010H bytes from d:\ibmcpp\lib\dde4mbs.lib (MALLOC.C)
+               at offset 00000030 00090H bytes from d:\ibmcpp\lib\dde4mbs.lib (PRTEMSG.C)
+               at offset 000000c0 00040H bytes from d:\ibmcpp\lib\dde4mbs.lib (DOFMTO.C)
+               at offset 00000100 00030H bytes from d:\ibmcpp\lib\dde4mbs.lib (LTOA.C)
+
+ 0005:00000AB0 00000000CH EDC1                   EDC_CLASS 32-bit
+               at offset 00000000 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (n_excpta.ASM)
+
+ 0005:00000ABC 000000240H EDC2                   EDC_CLASS 32-bit
+               at offset 00000000 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (edcstrt.ASM)
+               at offset 0000000c 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (EDCINIT.C)
+               at offset 00000018 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (setuparg.ASM)
+               at offset 00000024 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (SETUPENV.C)
+               at offset 00000030 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (EDCTERM.C)
+               at offset 0000003c 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (MALLOC.C)
+               at offset 00000048 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FREE.C)
+               at offset 00000054 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (HEAPMIN.C)
+               at offset 00000060 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (CALLOC.C)
+               at offset 0000006c 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (EXIT.C)
+               at offset 00000078 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (TERMINAT.C)
+               at offset 00000084 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (N_EXCEPT.C)
+               at offset 00000090 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (N_EXCRIT.C)
+               at offset 0000009c 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (N_DUMPWK.C)
+               at offset 000000a8 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (fpreset.ASM)
+               at offset 000000b4 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FCLWEAK.C)
+               at offset 000000c0 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FREEFCB.C)
+               at offset 000000cc 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (BEGTHRD.C)
+               at offset 000000d8 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (ENDTHRD.C)
+               at offset 000000e4 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FASTSEM.C)
+               at offset 000000f0 00018H bytes from d:\ibmcpp\lib\dde4mbs.lib (fastsema.ASM)
+               at offset 00000108 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (THREADID.C)
+               at offset 00000114 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (TSGLOBAL.C)
+               at offset 00000120 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (edcmsg.ASM)
+               at offset 0000012c 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (PRTEMSG.C)
+               at offset 00000138 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (strspn.ASM)
+               at offset 00000144 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (CTYPETBL.C)
+               at offset 00000150 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (DOFMTO.C)
+               at offset 0000015c 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (WEAKFMT.C)
+               at offset 00000168 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (WEAKCPUT.C)
+               at offset 00000174 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FPRINTF.C)
+               at offset 00000180 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (SPRINTF.C)
+               at offset 0000018c 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (WCTOMB.C)
+               at offset 00000198 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (BUFPRINT.C)
+               at offset 000001a4 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FFLUSH.C)
+               at offset 000001b0 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FILLB.C)
+               at offset 000001bc 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FLUSH.C)
+               at offset 000001c8 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FLUSHB.C)
+               at offset 000001d4 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (GETENV.C)
+               at offset 000001e0 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (INTERR.C)
+               at offset 000001ec 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (LTOA.C)
+               at offset 000001f8 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (UWRITE.C)
+               at offset 00000204 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (FREETHRD.C)
+               at offset 00000210 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (bts.ASM)
+               at offset 0000021c 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (WCSTOMBS.C)
+               at offset 00000228 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (EDCMXDEF.C)
+               at offset 00000234 0000CH bytes from d:\ibmcpp\lib\dde4mbs.lib (MATHERR.C)
+
+ 0005:00000CFC 000000004H EDC3                   EDC_CLASS 32-bit
+               at offset 00000000 00004H bytes from d:\ibmcpp\lib\dde4mbs.lib (n_excpta.ASM)
+
+ 0005:00000D00 000000000H BSS32                  BSS 32-bit
+ 0005:00000D00 0000000B4H c_common               BSS 32-bit
+ 0005:00000DC0 000004000H STACK32                STACK 32-bit
+               at offset 00000000 08000H bytes from d:\ibmcpp\lib\dde4mbs.lib (edcstrt.ASM)
+
+
+ Origin   Group
+ 0000:0   FLAT
+ 0005:0   DGROUP
+
+ Address       Export                  Alias
+
+ 0001:000000B4 OurWindowProcedure      OurWindowProcedure
+
+  Address         Publics by Name
+
+ 0005:00000D98       @BSSD:\source\rodent\rodent.c
+ 0005:00000D54       @BSSEDCINIT.C
+ 0005:00000D74       @BSSN_EXCEPT.C
+ 0005:00000D70       @BSSPRTEMSG.C
+ 0001:00001AF8       calloc
+ 0000:00000000  Imp  DOS32FLATTOSEL       (DOSCALLS.425)
+ 0003:00000012       Dos32GetMessage
+ 0003:00000012       DOS32GETMESSAGE
+ 0000:00000000  Imp  DOS32IQUERYMESSAGECP (MSG.8)
+ 0000:00000000  Imp  DOS32SELTOFLAT       (DOSCALLS.426)
+ 0000:00000000  Imp  DOS32TRUEGETMESSAGE  (MSG.6)
+ 0000:00000000  Imp  DosAllocMem          (DOSCALLS.299)
+ 0000:00000000  Imp  DosClose             (DOSCALLS.257)
+ 0000:00000000  Imp  DosCloseEventSem     (DOSCALLS.326)
+ 0000:00000000  Imp  DosCloseMutexSem     (DOSCALLS.333)
+ 0000:00000000  Imp  DosCreateEventSem    (DOSCALLS.324)
+ 0000:00000000  Imp  DosCreateMutexSem    (DOSCALLS.331)
+ 0000:00000000  Imp  DosCreateThread      (DOSCALLS.311)
+ 0000:00000000  Imp  DosDevIOCtl          (DOSCALLS.284)
+ 0000:00000000  Imp  DosExit              (DOSCALLS.234)
+ 0000:00000000  Imp  DosExitList          (DOSCALLS.296)
+ 0000:00000000  Imp  DOSFLATTOSEL         (DOSCALLS.425)
+ 0000:00000000  Imp  DosFreeMem           (DOSCALLS.304)
+ 0000:00000000  Imp  DosGetInfoBlocks     (DOSCALLS.312)
+ 0003:00000012       DOSGETMESSAGE
+ 0003:00000012       DosGetMessage
+ 0000:00000000  Imp  DosOpen              (DOSCALLS.273)
+ 0000:00000000  Imp  DOSPOSTEVENTSEM      (DOSCALLS.328)
+ 0000:00000000  Imp  DosQueryDBCSEnv      (NLS.6)
+ 0000:00000000  Imp  DosQueryHType        (DOSCALLS.224)
+ 0000:00000000  Imp  DosQuerySysInfo      (DOSCALLS.348)
+ 0000:00000000  Imp  DosRaiseException    (DOSCALLS.356)
+ 0000:00000000  Imp  DOSRELEASEMUTEXSEM   (DOSCALLS.335)
+ 0000:00000000  Imp  DOSREQUESTMUTEXSEM   (DOSCALLS.334)
+ 0000:00000000  Imp  DOSRESETEVENTSEM     (DOSCALLS.327)
+ 0000:00000000  Imp  DosSetExceptionHandler (DOSCALLS.354)
+ 0000:00000000  Imp  DosSetFilePtr        (DOSCALLS.256)
+ 0000:00000000  Imp  DosSetSignalExceptionFocus (DOSCALLS.378)
+ 0000:00000000  Imp  DOSWAITEVENTSEM      (DOSCALLS.329)
+ 0000:00000000  Imp  DosWrite             (DOSCALLS.282)
+ 0001:00001BD4       exit
+ 0001:00004678       fflush
+ 0001:000015D0       free
+ 0001:00004EEC       getenv
+ 0000:00000000  Imp  GpiCreatePS          (PMGPI.369)
+ 0000:00000000  Imp  GpiDestroyPS         (PMGPI.379)
+ 0001:000005B8       main
+ 0001:00001468       malloc
+ 0001:000000B4       OurWindowProcedure
+ 0003:00000000       sig32
+ 0005:00000348       stderr
+ 0005:00000340       stdin
+ 0005:00000344       stdout
+ 0001:0000320C       strspn
+ 0000:00000000  Imp  VIO16ASSOCIATE       (VIOCALLS.55)
+ 0000:00000000  Imp  VIO16CREATEPS        (VIOCALLS.56)
+ 0000:00000000  Imp  VIO16DESTROYPS       (VIOCALLS.61)
+ 0000:00000000  Imp  VIO16SHOWBUF         (VIOCALLS.43)
+ 0000:00000000  Imp  VIO16WRTCHARSTR      (VIOCALLS.13)
+ 0001:00005410       wcstombs
+ 0001:00004464       wctomb
+ 0000:00000000  Imp  WIN16DEFAVIOWINDOWPROC (PMVIOP.30)
+ 0000:00000000  Imp  WinBeginPaint        (PMWIN.703)
+ 0000:00000000  Imp  WinCreateMsgQueue    (PMWIN.716)
+ 0000:00000000  Imp  WinCreateStdWindow   (PMWIN.908)
+ 0000:00000000  Imp  WinDefWindowProc     (PMWIN.911)
+ 0000:00000000  Imp  WinDestroyMsgQueue   (PMWIN.726)
+ 0000:00000000  Imp  WinDestroyWindow     (PMWIN.728)
+ 0000:00000000  Imp  WinDispatchMsg       (PMWIN.912)
+ 0000:00000000  Imp  WinEndPaint          (PMWIN.738)
+ 0000:00000000  Imp  WinFillRect          (PMWIN.743)
+ 0000:00000000  Imp  WinGetMsg            (PMWIN.915)
+ 0000:00000000  Imp  WinInitialize        (PMWIN.763)
+ 0000:00000000  Imp  WinOpenWindowDC      (PMWIN.794)
+ 0000:00000000  Imp  WinQuerySysPointer   (PMWIN.828)
+ 0000:00000000  Imp  WinQuerySysValue     (PMWIN.829)
+ 0000:00000000  Imp  WinQueryWindowRect   (PMWIN.840)
+ 0000:00000000  Imp  WinRegisterClass     (PMWIN.926)
+ 0000:00000000  Imp  WinSendMsg           (PMWIN.920)
+ 0000:00000000  Imp  WinTerminate         (PMWIN.888)
+ 0005:00000334       _argc
+ 0005:00000338       _argv
+ 0001:00002AEC       _beginthread
+ 0001:000053FC       _bit_test_set
+ 0001:00004538       _bufprint
+ 0001:00002708       _callback_opt_sys
+ 0001:00002D6C       _CloseSem
+ 0001:00002D00       _CreateSem
+ 0001:000024F0       _critlib_except
+ 0001:00002838       _CrtGetLocalData
+ 0001:00002AAC       _CrtInitThread
+ 0001:00000888       _CRT_init
+ 0005:00000970       _crt_msg_handle
+ 0001:00000F08       _CRT_term
+ 0005:00000830       _ctable
+ 0005:00000D84       _ctype
+ 0005:00000934       _ctypeModule
+ 0005:00000350       _daylight
+ 0001:00005350       _DosFlatToSel
+ 0001:00005348       _DosSelToFlat
+ 0005:00000D00       _edata
+ 0001:00002F90       _edcGetMessage
+ 0005:00000D44       _edcinit_fin
+ 0005:00000DC0       _end
+ 0001:00002B60       _endthread
+ 0005:00000D90       _environ
+ 0001:00002F64       _errno
+ 0001:000026E4       _Exception
+ 0001:000023F4       _exception_dllinit
+ 0001:00002424       _exception_procinit
+ 0005:00000330       _exeentry
+ 0001:00001CD4       _EXE_Exception
+ 0001:000026C4       _fcloseall_weak
+ 0001:000047D4       _fillb
+ 0005:00000AB0       _firsteib
+ 0001:00004A1C       _Flush
+ 0001:00004BD4       _flushb
+ 0001:000026B4       _fpreset
+ 0001:0000438C       _fprintfieee
+ 0001:000043CC       _fprintf_ansi
+ 0001:00003248       _freeCtype
+ 0001:000026E0       _freeCtype_weak
+ 0001:0000275C       _FreeFCB
+ 0001:000026D8       _freeLocale_weak
+ 0001:00005358       _freeThreadStorage
+ 0001:00002458       _get_eib
+ 0001:00002720       _get_seglim
+ 0005:00000D00       _have_freed
+ 0001:00001A44       _heapmin
+ 0001:0000175C       _heapmin_int
+ 0001:0000507C       _ilog2
+ 0001:00003264       _init_ctype
+ 0001:000026DC       _init_ctype_weak
+ 0001:00005084       _internal_err
+ 0005:00000CFC       _lasteib
+ 0001:00001E7C       _Lib_excpt
+ 0005:00000DA4       _locale_initialized
+ 0001:000050D8       _ltoa
+ 0001:00005588       _matherr
+ 0005:00000690       _matherr_ptr
+ 0001:00005574       _Math_Exception_Def
+ 0005:00000D48       _memory_sem
+ 0001:00003008       _MesgServ
+ 0001:000024B4       _mig_eib_store
+ 0005:00000D94       _osmajor
+ 0005:00000D95       _osminor
+ 0005:00000358       _osmode
+ 0005:00000D04       _pBucketArr
+ 0005:0000034C       _PGLOBAL_PTR
+ 0001:00002FB4       _PrintErrMsg
+ 0001:00001D18       _recreate_exception
+ 0001:00002714       _Regen_exception
+ 0001:00002E50       _ReleaseSem
+ 0001:00002DC0       _RequestSem
+ 0001:00000C18       _setuparg
+ 0001:00000E10       _setupenv
+ 0001:000051C8       _set_crt_msg_handle
+ 0001:000010F8       _split_chunk
+ 0001:000043FC       _sprintfieee
+ 0001:00004438       _sprintf_ansi
+ 0001:00001CB4       _terminate
+ 0005:00000DA8       _TerminateAndDumpSem
+ 0001:000026FC       _Test_and_reset
+ 0001:00000838       _test_handle
+ 0005:00000354       _timezone
+ 0005:00000D64       _tmemory_sem
+ 0005:00000D88       _tzname
+ 0001:00005184       _uwrite
+ 0001:00004378       _wcputs
+ 0001:00001660       _Weak_FreeListEntry
+ 0001:00004640       _wfgetposMem
+ 0001:00004350       _wfloatfmt
+ 0001:00004630       _wfsetposMem
+ 0001:00004670       _wOpenMemory
+ 0001:0000462C       _wreadbSyncMem
+ 0001:0000466C       _wRemoveMem
+ 0001:00004654       _wrewindMem
+ 0001:00004638       _wSeekMem
+ 0001:00004658       _wtellMem
+ 0001:00004628       _wuwriteMem
+ 0001:0000517C       _w_raise
+ 0001:00002638       _w_Terminate_and_dump
+ 0001:000024D4       __Async_exception_flag
+ 0001:00002F14       __broken_time_ptr
+ 0005:00000360       __char_set_type
+ 0001:00002F74       __cppstore
+ 0001:00002F04       __cvt_buf_ptr
+ 0005:00000D80       __c_local_ctype
+ 0005:0000035C       __decimal_point
+ 0001:0000389C       __dofmto
+ 0001:00002F54       __doserrno
+ 0001:00002F44       __dttm_ptr
+ 0001:000051FC       __EDC3216
+ 0001:00005294       __EDCThunkProlog
+ 0001:00001FE8       __Exception
+ 0004:00000000       __fac
+ 0001:00002F24       __flags
+ 0001:00001514       __free
+ 0001:00002EE4       __internal_buf_ptr
+ 0001:00002EF4       __lcvt_buf_ptr
+ 0001:000011F0       __malloc
+ 0001:00002ED4       __perror_msg_ptr
+ 0001:00002E98       __random_seed
+ 0001:00000778       __RunExitList
+ 0001:000024C4       __Saved_return_address
+ 0001:00000EF8       __sctordtorInit
+ 0001:00000F00       __sctordtorTerm
+ 0001:00002F34       __strerror_msg_ptr
+ 0001:00002EB4       __strtok_pos
+ 0001:00002EC4       __tempname_ptr
+ 0001:00002E6C       __threadid
+ 0001:00002EA8       __version
+ 0001:00000EF0       __wctordtorInit
+ 0001:00000EF4       __wctordtorTerm
+
+  Address         Publics by Value
+
+ 0000:00000000  Imp  VIO16DESTROYPS       (VIOCALLS.61)
+ 0000:00000000  Imp  WinQuerySysValue     (PMWIN.829)
+ 0000:00000000  Imp  WIN16DEFAVIOWINDOWPROC (PMVIOP.30)
+ 0000:00000000  Imp  DosRaiseException    (DOSCALLS.356)
+ 0000:00000000  Imp  DosSetSignalExceptionFocus (DOSCALLS.378)
+ 0000:00000000  Imp  DosSetExceptionHandler (DOSCALLS.354)
+ 0000:00000000  Imp  DOS32FLATTOSEL       (DOSCALLS.425)
+ 0000:00000000  Imp  GpiCreatePS          (PMGPI.369)
+ 0000:00000000  Imp  VIO16WRTCHARSTR      (VIOCALLS.13)
+ 0000:00000000  Imp  DosCreateEventSem    (DOSCALLS.324)
+ 0000:00000000  Imp  WinDefWindowProc     (PMWIN.911)
+ 0000:00000000  Imp  WinOpenWindowDC      (PMWIN.794)
+ 0000:00000000  Imp  VIO16SHOWBUF         (VIOCALLS.43)
+ 0000:00000000  Imp  DosCreateMutexSem    (DOSCALLS.331)
+ 0000:00000000  Imp  WinFillRect          (PMWIN.743)
+ 0000:00000000  Imp  DosAllocMem          (DOSCALLS.299)
+ 0000:00000000  Imp  DOS32IQUERYMESSAGECP (MSG.8)
+ 0000:00000000  Imp  DosCloseEventSem     (DOSCALLS.326)
+ 0000:00000000  Imp  DosDevIOCtl          (DOSCALLS.284)
+ 0000:00000000  Imp  WinEndPaint          (PMWIN.738)
+ 0000:00000000  Imp  DosCreateThread      (DOSCALLS.311)
+ 0000:00000000  Imp  WinDestroyMsgQueue   (PMWIN.726)
+ 0000:00000000  Imp  WinCreateStdWindow   (PMWIN.908)
+ 0000:00000000  Imp  DOSPOSTEVENTSEM      (DOSCALLS.328)
+ 0000:00000000  Imp  DOSRELEASEMUTEXSEM   (DOSCALLS.335)
+ 0000:00000000  Imp  WinRegisterClass     (PMWIN.926)
+ 0000:00000000  Imp  DOS32SELTOFLAT       (DOSCALLS.426)
+ 0000:00000000  Imp  DosFreeMem           (DOSCALLS.304)
+ 0000:00000000  Imp  DOSFLATTOSEL         (DOSCALLS.425)
+ 0000:00000000  Imp  WinSendMsg           (PMWIN.920)
+ 0000:00000000  Imp  VIO16CREATEPS        (VIOCALLS.56)
+ 0000:00000000  Imp  WinTerminate         (PMWIN.888)
+ 0000:00000000  Imp  WinDestroyWindow     (PMWIN.728)
+ 0000:00000000  Imp  DOS32TRUEGETMESSAGE  (MSG.6)
+ 0000:00000000  Imp  DosQuerySysInfo      (DOSCALLS.348)
+ 0000:00000000  Imp  DOSWAITEVENTSEM      (DOSCALLS.329)
+ 0000:00000000  Imp  VIO16ASSOCIATE       (VIOCALLS.55)
+ 0000:00000000  Imp  DosExitList          (DOSCALLS.296)
+ 0000:00000000  Imp  DosOpen              (DOSCALLS.273)
+ 0000:00000000  Imp  WinBeginPaint        (PMWIN.703)
+ 0000:00000000  Imp  WinGetMsg            (PMWIN.915)
+ 0000:00000000  Imp  GpiDestroyPS         (PMGPI.379)
+ 0000:00000000  Imp  DOSRESETEVENTSEM     (DOSCALLS.327)
+ 0000:00000000  Imp  DosGetInfoBlocks     (DOSCALLS.312)
+ 0000:00000000  Imp  DosQueryHType        (DOSCALLS.224)
+ 0000:00000000  Imp  DosCloseMutexSem     (DOSCALLS.333)
+ 0000:00000000  Imp  WinQuerySysPointer   (PMWIN.828)
+ 0000:00000000  Imp  WinDispatchMsg       (PMWIN.912)
+ 0000:00000000  Imp  WinQueryWindowRect   (PMWIN.840)
+ 0000:00000000  Imp  DosWrite             (DOSCALLS.282)
+ 0000:00000000  Imp  WinInitialize        (PMWIN.763)
+ 0000:00000000  Imp  DosSetFilePtr        (DOSCALLS.256)
+ 0000:00000000  Imp  DosExit              (DOSCALLS.234)
+ 0000:00000000  Imp  DosClose             (DOSCALLS.257)
+ 0000:00000000  Imp  WinCreateMsgQueue    (PMWIN.716)
+ 0000:00000000  Imp  DOSREQUESTMUTEXSEM   (DOSCALLS.334)
+ 0000:00000000  Imp  DosQueryDBCSEnv      (NLS.6)
+ 0001:000000B4       OurWindowProcedure
+ 0001:000005B8       main
+ 0001:00000778       __RunExitList
+ 0001:00000838       _test_handle
+ 0001:00000888       _CRT_init
+ 0001:00000C18       _setuparg
+ 0001:00000E10       _setupenv
+ 0001:00000EF0       __wctordtorInit
+ 0001:00000EF4       __wctordtorTerm
+ 0001:00000EF8       __sctordtorInit
+ 0001:00000F00       __sctordtorTerm
+ 0001:00000F08       _CRT_term
+ 0001:000010F8       _split_chunk
+ 0001:000011F0       __malloc
+ 0001:00001468       malloc
+ 0001:00001514       __free
+ 0001:000015D0       free
+ 0001:00001660       _Weak_FreeListEntry
+ 0001:0000175C       _heapmin_int
+ 0001:00001A44       _heapmin
+ 0001:00001AF8       calloc
+ 0001:00001BD4       exit
+ 0001:00001CB4       _terminate
+ 0001:00001CD4       _EXE_Exception
+ 0001:00001D18       _recreate_exception
+ 0001:00001E7C       _Lib_excpt
+ 0001:00001FE8       __Exception
+ 0001:000023F4       _exception_dllinit
+ 0001:00002424       _exception_procinit
+ 0001:00002458       _get_eib
+ 0001:000024B4       _mig_eib_store
+ 0001:000024C4       __Saved_return_address
+ 0001:000024D4       __Async_exception_flag
+ 0001:000024F0       _critlib_except
+ 0001:00002638       _w_Terminate_and_dump
+ 0001:000026B4       _fpreset
+ 0001:000026C4       _fcloseall_weak
+ 0001:000026D8       _freeLocale_weak
+ 0001:000026DC       _init_ctype_weak
+ 0001:000026E0       _freeCtype_weak
+ 0001:000026E4       _Exception
+ 0001:000026FC       _Test_and_reset
+ 0001:00002708       _callback_opt_sys
+ 0001:00002714       _Regen_exception
+ 0001:00002720       _get_seglim
+ 0001:0000275C       _FreeFCB
+ 0001:00002838       _CrtGetLocalData
+ 0001:00002AAC       _CrtInitThread
+ 0001:00002AEC       _beginthread
+ 0001:00002B60       _endthread
+ 0001:00002D00       _CreateSem
+ 0001:00002D6C       _CloseSem
+ 0001:00002DC0       _RequestSem
+ 0001:00002E50       _ReleaseSem
+ 0001:00002E6C       __threadid
+ 0001:00002E98       __random_seed
+ 0001:00002EA8       __version
+ 0001:00002EB4       __strtok_pos
+ 0001:00002EC4       __tempname_ptr
+ 0001:00002ED4       __perror_msg_ptr
+ 0001:00002EE4       __internal_buf_ptr
+ 0001:00002EF4       __lcvt_buf_ptr
+ 0001:00002F04       __cvt_buf_ptr
+ 0001:00002F14       __broken_time_ptr
+ 0001:00002F24       __flags
+ 0001:00002F34       __strerror_msg_ptr
+ 0001:00002F44       __dttm_ptr
+ 0001:00002F54       __doserrno
+ 0001:00002F64       _errno
+ 0001:00002F74       __cppstore
+ 0001:00002F90       _edcGetMessage
+ 0001:00002FB4       _PrintErrMsg
+ 0001:00003008       _MesgServ
+ 0001:0000320C       strspn
+ 0001:00003248       _freeCtype
+ 0001:00003264       _init_ctype
+ 0001:0000389C       __dofmto
+ 0001:00004350       _wfloatfmt
+ 0001:00004378       _wcputs
+ 0001:0000438C       _fprintfieee
+ 0001:000043CC       _fprintf_ansi
+ 0001:000043FC       _sprintfieee
+ 0001:00004438       _sprintf_ansi
+ 0001:00004464       wctomb
+ 0001:00004538       _bufprint
+ 0001:00004628       _wuwriteMem
+ 0001:0000462C       _wreadbSyncMem
+ 0001:00004630       _wfsetposMem
+ 0001:00004638       _wSeekMem
+ 0001:00004640       _wfgetposMem
+ 0001:00004654       _wrewindMem
+ 0001:00004658       _wtellMem
+ 0001:0000466C       _wRemoveMem
+ 0001:00004670       _wOpenMemory
+ 0001:00004678       fflush
+ 0001:000047D4       _fillb
+ 0001:00004A1C       _Flush
+ 0001:00004BD4       _flushb
+ 0001:00004EEC       getenv
+ 0001:0000507C       _ilog2
+ 0001:00005084       _internal_err
+ 0001:000050D8       _ltoa
+ 0001:0000517C       _w_raise
+ 0001:00005184       _uwrite
+ 0001:000051C8       _set_crt_msg_handle
+ 0001:000051FC       __EDC3216
+ 0001:00005294       __EDCThunkProlog
+ 0001:00005348       _DosSelToFlat
+ 0001:00005350       _DosFlatToSel
+ 0001:00005358       _freeThreadStorage
+ 0001:000053FC       _bit_test_set
+ 0001:00005410       wcstombs
+ 0001:00005574       _Math_Exception_Def
+ 0001:00005588       _matherr
+ 0003:00000000       sig32
+ 0003:00000012       Dos32GetMessage
+ 0003:00000012       DOS32GETMESSAGE
+ 0003:00000012       DosGetMessage
+ 0003:00000012       DOSGETMESSAGE
+ 0004:00000000       __fac
+ 0005:00000330       _exeentry
+ 0005:00000334       _argc
+ 0005:00000338       _argv
+ 0005:00000340       stdin
+ 0005:00000344       stdout
+ 0005:00000348       stderr
+ 0005:0000034C       _PGLOBAL_PTR
+ 0005:00000350       _daylight
+ 0005:00000354       _timezone
+ 0005:00000358       _osmode
+ 0005:0000035C       __decimal_point
+ 0005:00000360       __char_set_type
+ 0005:00000690       _matherr_ptr
+ 0005:00000830       _ctable
+ 0005:00000934       _ctypeModule
+ 0005:00000970       _crt_msg_handle
+ 0005:00000AB0       _firsteib
+ 0005:00000CFC       _lasteib
+ 0005:00000D00       _have_freed
+ 0005:00000D00       _edata
+ 0005:00000D04       _pBucketArr
+ 0005:00000D44       _edcinit_fin
+ 0005:00000D48       _memory_sem
+ 0005:00000D54       @BSSEDCINIT.C
+ 0005:00000D64       _tmemory_sem
+ 0005:00000D70       @BSSPRTEMSG.C
+ 0005:00000D74       @BSSN_EXCEPT.C
+ 0005:00000D80       __c_local_ctype
+ 0005:00000D84       _ctype
+ 0005:00000D88       _tzname
+ 0005:00000D90       _environ
+ 0005:00000D94       _osmajor
+ 0005:00000D95       _osminor
+ 0005:00000D98       @BSSD:\source\rodent\rodent.c
+ 0005:00000DA4       _locale_initialized
+ 0005:00000DA8       _TerminateAndDumpSem
+ 0005:00000DC0       _end
+
+Program entry point at 0001:000007A0

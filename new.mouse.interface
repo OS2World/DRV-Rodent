@@ -1,0 +1,362 @@
+Attn: Nick Mamich
+      Bob Peterson
+      Larry Gerke
+
+Date: 12/20/93
+
+Subject: PM mouse messages and device driver pointer interface.
+
+   Sorry it took so long to compose this promised document, but I
+haven't had any free time until my vacation (which starts today <g>).
+I am the author of RODENT.SYS which, so far as I can tell, supports
+more pointer devices than all other pointer device drivers put
+together (not excluding the IBM pointer devices <g>).  Some of the
+devices currently supported are all of the conventional mice (but 
+with full feature support), digitizers (CalComp, Summagraphics and
+Kurta) and more exotic devices such as the Felix mouse.  To be added
+to that list are new 6-D mice from Mouse Systems and Logitech, new
+digitizers with advanced features, the UNMOUSE touch tablet and new
+versions of the Felix.  However, full support for some of these
+devices requires additional basic pointer support from OS/2.  Actually
+full support for existing devices also requires additional support.
+
+   So, first, I will define some terminology for clearness of
+exposition.  I will use the following...
+
+   X -- horizontal motion (columns on the screen) 
+   Y -- forward motion  (rows in the screen)
+   Z -- vertical motion 
+   P -- pitch, motion in the Y & Z plane
+   R -- roll, motion in the X & Z plane
+   W -- yaw, motion in the X * Y plane
+   T -- tilt, motion relative to the Z axis
+   F -- pressure (force)
+   H -- Window hit test result
+   K -- Keyboard control codes
+   D -- Input device flag (true = pointer, false = keyboard)
+   B -- Button number
+
+   The problem is that the OS/2 pointer interface presupposes obsolete
+devices.  More modern devices cannot be fully utilized.  For example,
+digitizers provide P and T, as well as motion in two dimensions (X and
+Y).  Even newer devices provide motion in six dimensions (X, Y, Z, P,
+R, and W) and up to 16 buttons.  In DOS and Windows, these features
+are used by more sophisticated CAD/CAM programs and by drawing,
+painting and calligraphy programs.  But under OS/2, the wonderful
+device-independent operating system, it is necessary for these devices
+to be NOT used as the basic pointer device and to be individually
+supported by applications.  I have constant requests from both users
+and vendors to provide support for these new pointer device features
+but cannot do so without violating basic design principles (and, in
+some cases, not even that can be done reliably).
+
+   This is unacceptable.  The purpose of this document is to propose
+an extension to the device driver pointer interface and also to the
+Presentation Manager messages.  Even if these are not currently
+implemented, their definition makes them reserved messages and
+device drivers that desire to support these additional messages can
+then do so.
+
+   The first problem is that the device driver interface is
+inadequate.  Currently there are two interfaces provided.  One
+for relative devices...
+
+eventRelative  equ   0001h ; Command to process relative mouse packet
+
+RelativeEvent struc
+
+   event       dw    ?  ; Mouse event
+   colMov      dw    ?  ; X relative movement
+   rowMov      dw    ?  ; Y relative movement
+
+RelativeEvent ends
+
+And one for absolute devices...
+
+eventAbsolute  equ   0003h ; Command to process absolute mouse packet
+
+AbsoluteEvent struc
+
+   event1      dw    ?  ; Mouse event (duplicate name, use "event")
+   row         dw    ?  ; Y position relative to 0
+   col         dw    ?  ; X position relative to 0
+   rowSize     dw    ?  ; Number of Y units (0 or 1 based?)
+   colSize     dw    ?  ; Number of X units (0 or 1 based?)
+
+AbsoluteEvent ends
+
+   I would suggest two additional interfaces, again one for relative
+devices...
+
+extendRelative  equ   0009h ; Command for extended relative packet
+
+RelativeExtend struc
+
+   event2      dw    ?  ; Mouse event (duplicate name, use "event")
+   colMov2     dw    ?  ; X relative movement
+   rowMov2     dw    ?  ; Y relative movement
+   verMov      dw    ?  ; Z relative movement
+   pitchMov    dw    ?  ; P relative movement
+   rollMov     dw    ?  ; R relative movement
+   yawMov      dw    ?  ; W relative movement
+   tiltMov     dw    ?  ; T relative movement
+   prseMov     dw    ?  ; F relative movement
+
+RelativeExtend ends
+
+and one for absolute devices...
+
+eventAbsolute  equ   000bh ; Command to process absolute mouse packet
+
+AbsoluteExtend struc
+
+   event3      dw    ?  ; Mouse event (duplicate name, use "event")
+   row3        dw    ?  ; Y position relative to 0
+   col3        dw    ?  ; X position relative to 0
+   rowSize3    dw    ?  ; Number of X units, 1 based
+   colSize3    dw    ?  ; Number of Y units, 1 based
+   height      dw    ?  ; Z position relative to 0
+   heightSize  dw    ?  ; Number of Z units, 1 based
+   pitch       dw    ?  ; P position
+   roll        dw    ?  ; R position
+   yaw         dw    ?  ; Y position
+   tilt        dw    ?  ; T position
+   pressure    dw    ?  ; F pressure
+   prsrSize    dw    ?  ; Number of F units, 1 based
+
+AbsoluteExtend ends
+
+   Notice that the units for P, R, W and T are always an angle and
+therefore would be in either degrees or radians.  Degrees are more
+conventional for some applications and radians used more often in
+mathematics.  However, it seems likely that degrees will be easier
+to work with and probably more familiar to most users.  Also,
+(assuming degrees) since multiples of 360 are equivalent, all of
+these values can be taken modulo 360 and therefore the range is
+0..359 in all cases.  It probably would be reasonable to provide the
+units in 1/160 th of a degree.  This allows a range of 0..57599 and
+provides for devices that measure in in 1/2, 1/4, 1/5, 1/8, 1/10 or
+1/16 of a degree.  Since the units are fixed for these quantities,
+there is no need for a "size" field.
+
+Also some of the quantities: P, R, W and T can be deduced from the X,
+Y and Z values.  However, some devices provide these directly and
+others provide values such as T directly but do not provide Z. 
+For devices with incomplete information, the omitted information
+can be calculated where possible and otherwise set to zero.  Since,
+in many cases, the hardware provides this information directly, it
+does not make sense to force MOUSE.SYS to recalcuate the dependent
+values.  Especially when this is not always possible due to omitted
+information since this is potentially expensive.  Digitizers tend to
+provide T, but not Z.  On the other hand, 3-D mice tend to provide X,
+Y, Z, P, R and W but not T.  It seems to be better to let the device
+dependent driver extract all possible informtion from the hardware
+and to calcuate the missing information (where possible) than try
+to make MOUSE.SYS do the job.
+
+I have assigned the commands values of 9 and 11 so that a single
+instruction "and ?,07h" would ignore the new commands and the existing
+mouse driver would continue to work with minimal changes (ignoring
+the new information, of course).  This provides the most painless
+upgrade path to introducing the new commands with no other commitment
+to immediate support.  If that were not reasonable, I would suggest
+reordering the extended absolute packet so that all of the size fields
+are at the end.  However, the above command values allows the device
+dependent pointer code to be written to support the new interface.
+It would also, of course, be necessary to also increase the size of...
+
+   Int_Packet    Abs_Data    <>    ; Interrupt packet to process
+   SInt_Packet   Abs_Data    <>    ; Interrupt packet to process
+
+preferrably by defining two new structures corresponding to Packet
+and Abs_Data, but with the new sizes and then using the definition
+of the extended absolute packet in these definitions.  The necessary
+changes can be made in a matter of minutes, so there is no major
+commitment to immediate coding support.
+
+However, while this is necessary it is not sufficient.  The problem
+is that even if this were done there is no method to obtain the
+needed information in Presentation Manager.  PM defines a small set
+of mouse messages, but there is no place for any additional informtion
+about Z, P, R, Y, T and F.  The existing PM messages are...
+
+   WM_BUTTON1CLICK(X, Y, H, K)
+   WM_BUTTON1DBLCLK(X, Y, H, K)
+   WM_BUTTON1DOWN(X, Y, H, K)
+   WM_BUTTON1UP(X, Y, H, K)
+   WM_BUTTON1MOTIONEND(H)
+   WM_BUTTON1MOTIONSTART(H)
+
+   WM_BUTTON2CLICK(X, Y, H, K)
+   WM_BUTTON2DBLCLK(X, Y, H, K)
+   WM_BUTTON2DOWN(X, Y, H, K)
+   WM_BUTTON2UP(X, Y, H, K)
+   WM_BUTTON2MOTIONEND(H)
+   WM_BUTTON2MOTIONSTART(H)
+
+   WM_BUTTON3CLICK(X, Y, H, K)
+   WM_BUTTON3DBLCLK(X, Y, H, K)
+   WM_BUTTON3DOWN(X, Y, H, K)
+   WM_BUTTON3UP(X, Y, H, K)
+   WM_BUTTON3MOTIONEND(H)
+   WM_BUTTON3MOTIONSTART(H)
+
+   WM_BEGINDRAG(X, Y, D)
+   WM_ENDDRAG(X, Y, D)
+   WM_BEGINSELECT(X, Y, D)
+   WM_ENDSELECT(X, Y, D)
+   WM_SINGLESELECT(X, Y, D)
+   WM_CHORD(H)
+   WM_CONTEXTMENU(X, Y, D)
+   WM_MOUSEMAP(physicalB, logicalB)
+   WM_MOUSEMOVE(X, Y, H, K)
+
+I am suggesting that new messages be defined...
+
+   WM_MOUSEHEIGHT(Z, H, K)
+   WM_MOUSEPITCH(P, H, K)
+   WM_MOUSEROLL(R, H, K)
+   WM_MOUSEYAW(W, H, K)
+   WM_MOUSETILT(T, H, K)
+   WM_MOUSEPRESSURE(W, H, K)
+
+   Where each of these messages is sent immediately following
+WM_MOUSEMOVE if there is an appropriate value (or change in the
+value).  Existing applications will ignore them and new applications
+can take advantage of them.  Additionally, since newer devices allow
+up to 16-buttons, whenever a button press or release occurs, a new
+message...
+
+   WM_BUTTONS(flags, time)
+
+can be sent which would contain a flag word, with a one bit for each
+button pressed and a 0 bit for each button not pressed.  It would
+also contain a 32-bit time stamp (milliseconds since boot?) to allow
+user applications to directly detect single, double and triple clicks
+on all supported buttons.  Due to the delay in processing mouse events
+it is not possible to require an application event handler to obtain
+the required timestamp.  The existing WM_BUTTON...() messages are
+probably adequate for almost all applications so I don't think it is
+necessary for PM to decode all possible buttons and button
+combinations.  However, I have had many users and clients request that
+the additional buttons be handled.  The extra message will allow any
+decoding necessary to be done.  This message should be sent BEFORE
+any existing PM message that is sent because of a button press or
+release since it is the "raw" button information appropriately
+timestamped.
+
+   The current mouse interface would allow up to 7 buttons and when
+the interface changes to a 32-bit interface up to 15 buttons can be
+accomodated without changing the interface.  Also, since some absolute
+devices need more than 16 bits to express their position (some need as
+many as 18 bits and new devices may well need even more) the 32-bit
+interface could simply expand each of the available fields to 32-bits
+allowing an increased range of motion.
+
+   To provide in the current context means violating the basic device
+driver design, which assumes seperation of the device dependent
+information from the device independent information.  In fact, some
+API that allowed the device dependent driver to signal events to
+an application would be required.  That would be awkard because it
+would be very difficult to synchronize the PM event stream with the
+device event stream because of the lack of a unified time source.
+
+   By simply defining these PM events, even if they are not
+implemented, a device driver implementor that wished to provide these
+extensions would then have a set of reserved message ids that have a
+specified definition and which would not conflict with either possible
+system defined messages not yet defined or with user defined messages.
+At least this level of support is necessary.  The minimal support
+needed for these new PM messages is to simply define them in the PM
+documentation and to assign them message ids which are currently
+reserved by the operating system for new messages (less than 0x1000).
+
+Immediate and complete OS/2 support (in version 2.2) would be nice,
+but I recognize budget and priority difficulties.  Nevertheless, with
+at least a minimal set of definitions for FUTURE extensions, device
+driver implementors could proceed with support for the newer devices.
+They could even take it upon themselves to replace the system module
+that generates the PM mouse messages.  I will be happy to discuss
+these suggestions, or to elucidate if needed.  My phone number and
+e-mail numbers are...
+
+   804/385-4468
+   CIS: 71573,1075
+   Internet: 71573.1075@compuserve.com
+   Genie: M.FINNEY
+
+I will also check for a reply on DUDE occassionally.  Thanks for your
+time and effort in considering these needs.
+
+Note: I have not made any suggestions for extensions to VMOUSE.SYS
+      because no existing DOS programs would use the extensions and
+      while this information should be made available to VMOUSE.SYS
+      so that custom extensions can be provided, there are quite a
+      few extensions to the standard mouse interface for different
+      devices.  I don't necessarily see that OS/2 should provide ALL
+      of these mutually contradictory interfaces, and I don't know of
+      any so predominate that it should be supplied and the others
+      ignored.  However, if VMOUSE.SYS has the information available,
+      individual vendors (for example AUTOCAD) could provide a custom
+      VMOUSE.SYS that works with their particular product.
+
+Note: The question in about the size field being 0 or 1 based in the
+      absolute event packet is because the documentation states
+      reasonably clearly that these are zero based.  However, the
+      code in MOUSE.SYS (in ABS.ASM and wrapped for boundary purposes)
+      clearly indicates that a one based size field is expected...
+
+  ;*
+  ;* Now map the (x,y) point to the current display mode space.  This
+  ;* is done using the following formula:
+  ;*
+  ;*                   Row = (YPos * Row_Res) / YSize
+  ;*
+  ;* Where Row is the display row, YPos is the absolute y position,
+  ;* Col_Res is the display mode row resolution and YSize is the Y
+  ;* axis size of the absolute pointing device.  The Column
+  ;* calculation is the same using the X and column values.
+  ;*
+
+  mov  ax, fs:Int_Packet.X_Pos     ; get the x position
+  mov  cx, fs:Int_Packet.X_Size    ; get the x size
+  pop  bx                          ; get the col resolution
+  .if <cx a 0>                     ;
+    call Calc_Num                  ; do (ax * bx)/cx
+    dec  bx                        ; convert col resolution to 0 base
+    .if <ax a bx>                  ; if new point out of range somehow
+       mov  ax, bx                 ; then use the max 0 based 
+    .endif                         ;   resolution
+    pop  bx                        ; get the row resolution
+    push ax                        ; save the new point
+    mov  ax, fs:Int_Packet.Y_Pos   ; get the y position
+    mov  cx, fs:Int_Packet.Y_Size  ; get the y size
+    .if <cx a 0>                   ;
+      call Calc_Num                ; do (ax * bx)/cx
+      dec  bx                      ; convert col resolution to 0 base
+      .if <ax a bx>                ; if new point out of range somehow
+         mov  ax, bx               ; then use the max 0 based 
+      .endif                       ;  resolution
+      pop  bx                      ; leave new row in ax
+      clc                          ; indicate NO_ERROR
+    .else                          ;
+      pop  bx                      ; reset stack
+      stc                          ; set error condition
+      jmp  exit_err                ; leave
+    .endif                         ;
+  .else                            ;
+    pop  bx                        ; reset stack
+    stc                            ; set error condition
+  .endif                           ;
+
+The formula (pos * units) / size will give a result, p, 0 <= p < units
+if and only if 0 <= pos < size-1.  Further, the line "dec bx" for the
+check and handling of overflow will result in p = units - 1.  No doubt
+the reason that the check is necessary is that the documentation
+states a zero-based size field which would result in 0 <= p <= units
+for the case of x (or y) having its maximum value.  The comments in
+MOUSE.INC also clearly state that the size fields are one based.
+
+
+
+
